@@ -11,8 +11,7 @@ with lib;
 
       # Profiles of this basic netboot media
       ../../profiles/all-hardware.nix
-      ../../profiles/base.nix
-      ../../profiles/installation-device.nix
+      ../../profiles/cerana.nix
     ];
 
   # Allow the user to log in as root without a password.
