@@ -6,17 +6,6 @@
 with lib;
 
 {
-  options = {
-
-    netboot.storeContents = mkOption {
-      example = literalExample "[ pkgs.stdenv ]";
-      description = ''
-        This option lists additional derivations to be included in the
-        Nix store in the generated netboot image.
-      '';
-    };
-
-  };
 
   config = {
 
@@ -25,11 +14,6 @@ with lib;
     # Don't build the GRUB menu builder script, since we don't need it
     # here and it causes a cyclic dependency.
     boot.loader.grub.enable = false;
-
-    boot.initrd.postMountCommands = ''
-      mkdir -p /mnt-root/nix/store
-      mount -t squashfs /nix-store.squashfs /mnt-root/nix/store
-    '';
 
     # !!! Hack - attributes expected by other modules.
     system.boot.loader.kernelFile = "bzImage";
@@ -46,26 +30,14 @@ with lib;
 
     boot.initrd.kernelModules = [ "loop" ];
 
-    # Closures to be copied to the Nix store, namely the init
-    # script and the top-level system configuration directory.
-   netboot.storeContents =
-      [ config.system.build.toplevel ];
-
-    # Create the squashfs image that contains the Nix store.
-    system.build.squashfsStore = import ../../../lib/make-squashfs.nix {
-      inherit (pkgs) stdenv squashfsTools perl pathsFromGraph;
-      storeContents = config.netboot.storeContents;
-    };
-
-
     # Create the initrd
     system.build.netbootRamdisk = pkgs.makeInitrd {
       inherit (config.boot.initrd) compressor;
       prepend = [ "${config.system.build.initialRamdisk}/initrd" ];
 
       contents =
-        [ { object = config.system.build.squashfsStore;
-            symlink = "/nix-store.squashfs";
+        [ { object = config.system.build.toplevel + "/init";
+            symlink = "/init";
           }
         ];
     };
