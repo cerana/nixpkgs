@@ -26,7 +26,7 @@ stdenv.mkDerivation rec {
     sha256 = "0i9ak4wqn444i6362xq5xl0msvcck8qqypp0fynrxq8mddzypwps";
   };
 
-  patches = [ ./const.patch ./install_prefix.patch ];
+  patches = [ ./datasetns.patch ./const.patch ./install_prefix.patch ];
 
   buildInputs = [ autoconf automake libtool ];
 
