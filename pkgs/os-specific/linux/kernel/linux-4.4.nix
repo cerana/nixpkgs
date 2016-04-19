@@ -9,7 +9,7 @@ import ./generic.nix (args // rec {
     sha256 = "1c0lqk2q4hf8jx6myhcqgh2509d36wx87l5k5cl3xfsnrzrpclrs";
   };
 
-  kernelPatches = args.kernelPatches;
+  kernelPatches = args.kernelPatches ++ [ { name = "datasetns"; patch = ./datasetns.patch; } ];
 
   features.iwlwifi = true;
   features.efiBootStub = true;

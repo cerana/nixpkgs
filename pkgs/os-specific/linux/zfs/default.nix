@@ -23,10 +23,10 @@ stdenv.mkDerivation rec {
   version = "0.6.5.7";
 
   src = fetchFromGitHub {
-    owner = "zfsonlinux";
+    owner = "ClusterHQ";
     repo = "zfs";
-    rev = "zfs-${version}";
-    sha256 = "17mshxyp8k7i9a7ys0rznhkz83f6650pby9ka48d6gzgcwv9nnsm";
+    rev = "libzfs_core-HEAD";
+    sha256 = "0mviw8x1pyc7qh4r2gbw98g4y3hbwc2scz7v5dxyxvn5zmx99lcw";
   };
 
   patches = [ ./nix-build.patch ];
