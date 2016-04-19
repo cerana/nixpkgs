@@ -10,7 +10,7 @@ with lib;
     [ ./netboot.nix
 
       # Profiles of this basic netboot media
-      ../../profiles/all-hardware.nix
+      ../../profiles/cerana-hardware.nix
       ../../profiles/cerana.nix
     ];
 
