@@ -257,7 +257,7 @@ with stdenv.lib;
 
   # Security related features.
   STRICT_DEVMEM y # Filter access to /dev/mem
-  SECURITY_SELINUX_BOOTPARAM_VALUE 0 # Disable SELinux by default
+  SECURITY_SELINUX_BOOTPARAM_VALUE 1 # Enable SELinux by default
   ${optionalString (!(features.grsecurity or false)) ''
     DEVKMEM n # Disable /dev/kmem
   ''}
@@ -271,8 +271,7 @@ with stdenv.lib;
   ''}
 
   # AppArmor support
-  SECURITY_APPARMOR y
-  DEFAULT_SECURITY_APPARMOR y
+  SECURITY_APPARMOR n
 
   # Microcode loading support
   MICROCODE y
