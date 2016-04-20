@@ -2,7 +2,7 @@
 , configFile ? "all"
 
 # Userspace dependencies
-, zlib, libuuid, python
+, zlib, libuuid
 
 # Kernel dependencies
 , kernel ? null, spl ? null
@@ -33,7 +33,7 @@ stdenv.mkDerivation rec {
 
   buildInputs = [ autoreconfHook nukeReferences ]
     ++ optionals buildKernel [ spl ]
-    ++ optionals buildUser [ zlib libuuid python ];
+    ++ optionals buildUser [ zlib libuuid ];
 
   # for zdb to get the rpath to libgcc_s, needed for pthread_cancel to work
   NIX_CFLAGS_LINK = "-lgcc_s";
