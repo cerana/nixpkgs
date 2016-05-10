@@ -65,7 +65,7 @@ in
   config = {
     # Note: this is set here rather than up there so that changing
     # nixosLabel would not rebuild manual pages
-    services.mingetty.greetingLine = mkDefault ''<<< Welcome to NixOS ${config.system.nixosLabel} (\m) - \l >>>'';
+    services.mingetty.greetingLine = mkDefault ''<<< Welcome to CeranaOS - \l >>>'';
 
     systemd.services."getty@" =
       { serviceConfig.ExecStart = gettyCmd "--noclear --keep-baud %I 115200,38400,9600 $TERM";
