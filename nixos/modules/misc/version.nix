@@ -108,7 +108,7 @@ in
       nixosVersionSuffix = mkIf (pathIsDirectory gitRepo) (mkDefault (".git." + gitCommitId));
 
       # Note: code names must only increase in alphabetical order.
-      nixosCodeName = "Flounder";
+      nixosCodeName = "test5";
     };
 
     # Generate /etc/os-release.  See
@@ -116,12 +116,12 @@ in
     # format.
     environment.etc."os-release".text =
       ''
-        NAME=NixOS
-        ID=nixos
+        NAME=CeranaOS
+        ID=ceranaos
         VERSION="${config.system.nixosVersion} (${config.system.nixosCodeName})"
         VERSION_ID="${config.system.nixosVersion}"
         PRETTY_NAME="NixOS ${config.system.nixosVersion} (${config.system.nixosCodeName})"
-        HOME_URL="http://nixos.org/"
+        HOME_URL="http://cerana.org/"
       '';
 
   };
