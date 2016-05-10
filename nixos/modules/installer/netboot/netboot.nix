@@ -17,7 +17,7 @@ with lib;
 
     # !!! Hack - attributes expected by other modules.
     system.boot.loader.kernelFile = "bzImage";
-    environment.systemPackages = [ pkgs.grub2 pkgs.libselinux];
+    environment.systemPackages = [ pkgs.grub2 pkgs.libselinux pkgs.qemu_kvm ];
 
     boot.consoleLogLevel = mkDefault 7;
 
