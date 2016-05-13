@@ -9581,7 +9581,7 @@ in
     overrides = (config.goPackageOverrides or (p: {})) pkgs;
   };
 
-  goPackages = go15Packages;
+  goPackages = go16Packages;
 
   go2nix = goPackages.go2nix.bin // { outputs = [ "bin" ]; };
 
