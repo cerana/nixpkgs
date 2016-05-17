@@ -690,6 +690,8 @@ in
 
   ccnet = callPackage ../tools/networking/ccnet { };
 
+  cerana = goPackages.cerana.bin // { outputs = [ "bin" ]; };
+
   cfdyndns = callPackage ../applications/networking/dyndns/cfdyndns { };
 
   ckbcomp = callPackage ../tools/X11/ckbcomp { };

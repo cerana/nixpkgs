@@ -1,6 +1,6 @@
 /* This file defines the composition for Go packages. */
 
-{ overrides, stdenv, go, buildGoPackage, git
+{ overrides, stdenv, go, buildGoPackage, git, glide
 , fetchgit, fetchhg, fetchurl, fetchFromGitHub, fetchFromBitbucket, fetchbzr, pkgs }:
 
 let
@@ -447,6 +447,23 @@ let
     repo   = "cast";
     sha256 = "144xwvmjbrv59zjj1gnq5j9qpy62dgyfamxg5l3smdwfwa8vpf5i";
     buildInputs = [ jwalterweatherman ];
+  };
+
+  cerana = buildFromGitHub {
+    rev = "cb302f42882ad839ddc00a97fc1f07c0c8ac3047";
+    version = "2016-05-17";
+    owner = "cerana";
+    repo = "cerana";
+    sha256 = "19vl7jclyd44673jlg0g6jjxxzvk4krkh6dgr87l7a8rblgynr82";
+    goPackagePath = "github.com/cerana/cerana";
+
+    preConfigure = ''
+      export GIT_SSL_CAINFO=/etc/ssl/certs/ca-certificates.crt
+      glide install
+    '';
+
+    buildInputs = [ git glide ];
+
   };
 
   check-v1 = buildGoPackage rec {
