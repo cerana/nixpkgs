@@ -688,6 +688,8 @@ in
 
   ccnet = callPackage ../tools/networking/ccnet { };
 
+  cerana = callPackage ../os-specific/linux/cerana { };
+
   cfdyndns = callPackage ../applications/networking/dyndns/cfdyndns { };
 
   ckbcomp = callPackage ../tools/X11/ckbcomp { };
