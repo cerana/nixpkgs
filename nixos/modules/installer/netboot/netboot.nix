@@ -19,16 +19,10 @@ with lib;
     system.boot.loader.kernelFile = "bzImage";
     environment.systemPackages = [ pkgs.grub2 pkgs.libselinux pkgs.qemu_kvm pkgs.strace pkgs.gdb pkgs.lshw pkgs.consul pkgs.cerana ];
 
-    boot.consoleLogLevel = mkDefault 7;
-
     fileSystems."/" =
       { fsType = "tmpfs";
         options = [ "mode=0755" ];
       };
-
-    boot.initrd.availableKernelModules = [ "squashfs" ];
-
-    boot.initrd.kernelModules = [ "loop" ];
 
     # Create the initrd
     system.build.netbootRamdisk = pkgs.makeInitrd {
