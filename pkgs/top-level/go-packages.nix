@@ -461,6 +461,7 @@ let
       export GIT_SSL_CAINFO=/etc/ssl/certs/ca-certificates.crt
       glide install
     '';
+    postBuild = "rm $NIX_BUILD_TOP/go/bin/zfs";
 
     buildInputs = [ git glide ];
 
