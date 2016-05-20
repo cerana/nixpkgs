@@ -460,8 +460,13 @@ let
     preConfigure = ''
       export GIT_SSL_CAINFO=/etc/ssl/certs/ca-certificates.crt
       glide install
+      mkdir -p $out/scripts/
+      cp run-test.sh $out/scripts/
     '';
-    postBuild = "rm $NIX_BUILD_TOP/go/bin/zfs";
+    postBuild = ''
+      rm $NIX_BUILD_TOP/go/bin/zfs
+      chmod +x $out/scripts/*
+    '';
 
     buildInputs = [ git glide ];
 
