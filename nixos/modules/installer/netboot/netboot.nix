@@ -17,7 +17,7 @@ with lib;
 
     # !!! Hack - attributes expected by other modules.
     system.boot.loader.kernelFile = "bzImage";
-    environment.systemPackages = [ pkgs.grub2 pkgs.libselinux pkgs.qemu_kvm pkgs.strace pkgs.gdb pkgs.lshw pkgs.consul pkgs.cerana ];
+    environment.systemPackages = [ pkgs.grub2 pkgs.libselinux pkgs.qemu_kvm pkgs.strace pkgs.gdb pkgs.lshw pkgs.consul pkgs.cerana pkgs.dhcpcd ];
 
     fileSystems."/" =
       { fsType = "tmpfs";
@@ -47,6 +47,7 @@ with lib;
 
     boot.postBootCommands =
       ''
+        ${pkgs.nettools}/bin/hostname cerana
         echo ${pkgs.cerana}/scripts/run-test.sh
       '';
 
