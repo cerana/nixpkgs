@@ -17,7 +17,7 @@ with lib;
 
     # !!! Hack - attributes expected by other modules.
     system.boot.loader.kernelFile = "bzImage";
-    environment.systemPackages = [ pkgs.grub2 pkgs.libselinux pkgs.qemu_kvm pkgs.strace pkgs.gdb pkgs.lshw pkgs.consul pkgs.cerana ];
+    environment.systemPackages = [ pkgs.grub2 pkgs.libselinux pkgs.qemu_kvm pkgs.strace pkgs.gdb pkgs.lshw pkgs.consul pkgs.cerana pkgs.dhcpcd ];
 
     fileSystems."/" =
       { fsType = "tmpfs";
@@ -47,14 +47,8 @@ with lib;
 
     boot.postBootCommands =
       ''
-        # After booting, register the contents of the Nix store
-        # in the Nix database in the tmpfs.
-        ${config.nix.package}/bin/nix-store --load-db < /nix/store/nix-path-registration
-
-        # nixos-rebuild also requires a "system" profile and an
-        # /etc/NIXOS tag.
-        touch /etc/NIXOS
-        ${config.nix.package}/bin/nix-env -p /nix/var/nix/profiles/system --set /run/current-system
+        ${pkgs.nettools}/bin/hostname cerana
+        echo ${pkgs.cerana}/scripts/run-test.sh
       '';
 
   };
