@@ -450,22 +450,21 @@ let
   };
 
   cerana = buildFromGitHub {
-    rev = "cb302f42882ad839ddc00a97fc1f07c0c8ac3047";
+    rev = "630dd7a3a248d4564aae1b1262562b301ad515bc";
     version = "2016-05-17";
     owner = "cerana";
     repo = "cerana";
-    sha256 = "19vl7jclyd44673jlg0g6jjxxzvk4krkh6dgr87l7a8rblgynr82";
+    sha256 = "0ahiib9man9sfwbnarmvmvwv5h80yl98lwmbhh7a7qrcrhm3dr4x";
     goPackagePath = "github.com/cerana/cerana";
 
     preConfigure = ''
       export GIT_SSL_CAINFO=/etc/ssl/certs/ca-certificates.crt
       glide install
-      mkdir -p $out/scripts/
-      cp run-test.sh $out/scripts/
+      cd boot && make DESTDIR=$out install
     '';
     postBuild = ''
+      pwd
       rm $NIX_BUILD_TOP/go/bin/zfs
-      chmod +x $out/scripts/*
     '';
 
     buildInputs = [ git glide ];
