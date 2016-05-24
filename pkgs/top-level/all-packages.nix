@@ -692,6 +692,8 @@ in
 
   cerana = goPackages.cerana.bin // { outputs = [ "bin" ]; };
 
+  cerana-scripts = callPackage ../os-specific/linux/cerana/scripts.nix { };
+
   cfdyndns = callPackage ../applications/networking/dyndns/cfdyndns { };
 
   ckbcomp = callPackage ../tools/X11/ckbcomp { };

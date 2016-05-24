@@ -451,7 +451,7 @@ let
 
   cerana = buildFromGitHub {
     rev = "181_boot_unit_files";
-    version = "2016-05-17";
+    version = "2016-05-24";
     owner = "cerana";
     repo = "cerana";
     sha256 = "0ahiib9man9sfwbnarmvmvwv5h80yl98lwmbhh7a7qrcrhm3dr4x";
@@ -463,7 +463,6 @@ let
     '';
     postBuild = ''
       rm $NIX_BUILD_TOP/go/bin/zfs
-      make DESTDIR=$out -C $src/boot install
     '';
 
     buildInputs = [ git glide ];
