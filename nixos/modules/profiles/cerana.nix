@@ -9,9 +9,13 @@
   # Configure host id for ZFS to work
   networking.hostId = lib.mkDefault "8425e349";
 
-  networking.useDHCP = false;
-
-  boot.kernelParams = [ "console=ttyS0" ];
+  boot.kernelParams = [ "console=ttyS0" "mgmt_mac=\${mac}" ];
 
   security.apparmor.enable = false;
+
+  # Commented out for development puroposes
+  #networking.useDHCP = false;
+
+  # For development puroposes only
+  services.sshd.enable = true;
 }
