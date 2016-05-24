@@ -450,7 +450,7 @@ let
   };
 
   cerana = buildFromGitHub {
-    rev = "630dd7a3a248d4564aae1b1262562b301ad515bc";
+    rev = "181_boot_unit_files";
     version = "2016-05-17";
     owner = "cerana";
     repo = "cerana";
@@ -460,11 +460,10 @@ let
     preConfigure = ''
       export GIT_SSL_CAINFO=/etc/ssl/certs/ca-certificates.crt
       glide install
-      cd boot && make DESTDIR=$out install
     '';
     postBuild = ''
-      pwd
       rm $NIX_BUILD_TOP/go/bin/zfs
+      make DESTDIR=$out -C $src/boot install
     '';
 
     buildInputs = [ git glide ];
