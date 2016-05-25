@@ -9,7 +9,7 @@
   # Configure host id for ZFS to work
   networking.hostId = lib.mkDefault "8425e349";
 
-  boot.kernelParams = [ "console=ttyS0" "mgmt_mac=\${mac}" ];
+  boot.kernelParams = [ "console=ttyS0" "cerana.mgmt_mac=\${mac}" "cerana.mgmt_ip=\${ip}" "cerana.zfs_config=auto" ];
 
   security.apparmor.enable = false;
 
