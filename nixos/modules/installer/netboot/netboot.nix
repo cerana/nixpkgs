@@ -47,9 +47,9 @@ with lib;
 
     boot.postBootCommands =
       ''
-        ${pkgs.nettools}/bin/hostname cerana
-        ${pkgs.findutils}/bin/find ${pkgs.cerana-scripts}/scripts -ls
+        ${pkgs.coreutils}/bin/rm /etc/hostid
         ${pkgs.cerana-scripts}/scripts/parse-cmdline.sh
+        ${pkgs.cerana-scripts}/scripts/gen-hostid.sh
       '';
 
   };

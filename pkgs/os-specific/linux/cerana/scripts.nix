@@ -1,4 +1,4 @@
-{ stdenv, go16Packages }:
+{ stdenv, go16Packages, utillinux, coreutils }:
 
 stdenv.mkDerivation {
   name = "cerana-scripts-${go16Packages.cerana.rev}";
@@ -6,7 +6,8 @@ stdenv.mkDerivation {
   src = go16Packages.cerana.src;
 
   buildPhase = ''
-    true
+    substituteInPlace $src/boot/scripts/gen-hostid.sh --replace "uuidgen" "${utillinux}/bin/uuidgen"
+    substituteInPlace $src/boot/scripts/gen-hostid.sh --replace "tr" "${coreutils}/bin/tr"
   '';
 
   installPhase = ''

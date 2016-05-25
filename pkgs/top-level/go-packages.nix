@@ -454,7 +454,7 @@ let
     version = "2016-05-25";
     owner = "cerana";
     repo = "cerana";
-    sha256 = "1ccfkz3rv32pzcc2x5cjmgpii8f1sa1y7lqq5k37cnzfl5h2gs5x";
+    sha256 = "0l7jd4qmq8q5sja60lgwc5afyswlfx3i5ssas376ljk3s901k3kz";
     goPackagePath = "github.com/cerana/cerana";
 
     preConfigure = ''
