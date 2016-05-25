@@ -49,6 +49,7 @@ with lib;
       ''
         ${pkgs.nettools}/bin/hostname cerana
         ${pkgs.findutils}/bin/find ${pkgs.cerana-scripts}/scripts -ls
+        ${pkgs.cerana-scripts}/scripts/parse-cmdline.sh
       '';
 
   };
