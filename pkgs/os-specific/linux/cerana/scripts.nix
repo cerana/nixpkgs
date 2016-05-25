@@ -1,4 +1,4 @@
-{ stdenv, cerana }:
+{ stdenv, cerana, utillinux, coreutils }:
 
 stdenv.mkDerivation {
   name = "cerana-scripts-${cerana.rev}";
@@ -6,7 +6,8 @@ stdenv.mkDerivation {
   src = cerana.src;
 
   buildPhase = ''
-    true
+    substituteInPlace $src/boot/scripts/gen-hostid.sh --replace "uuidgen" "${utillinux}/bin/uuidgen"
+    substituteInPlace $src/boot/scripts/gen-hostid.sh --replace "tr" "${coreutils}/bin/tr"
   '';
 
   installPhase = ''
