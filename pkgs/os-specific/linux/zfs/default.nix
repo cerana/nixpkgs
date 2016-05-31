@@ -26,7 +26,7 @@ stdenv.mkDerivation rec {
     owner = "ClusterHQ";
     repo = "zfs";
     rev = "libzfs_core-HEAD";
-    sha256 = "0mviw8x1pyc7qh4r2gbw98g4y3hbwc2scz7v5dxyxvn5zmx99lcw";
+    sha256 = "009qp053jsw3as6dfydjpamdj4sj069z6l7si1pd37r4a53hhxjz";
   };
 
   patches = [ ./nix-build.patch ];
