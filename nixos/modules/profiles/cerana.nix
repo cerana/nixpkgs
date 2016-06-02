@@ -5,6 +5,7 @@
 {
   # Include support for ZFS
   boot.supportedFilesystems = [ "zfs" ];
+  boot.zfs.forceImportAll = false;
 
   # Configure host id for ZFS to work
   networking.hostId = lib.mkDefault "8425e349";
@@ -15,6 +16,8 @@
 
   # Commented out for development puroposes
   #networking.useDHCP = false;
+
+  services.ceranapool.enable = true;
 
   # For development puroposes only
   services.sshd.enable = true;
