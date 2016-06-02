@@ -1,17 +1,21 @@
-{ stdenv, cerana, utillinux, coreutils }:
+{ stdenv, cerana, utillinux, coreutils, systemd, gnugrep, gawk, zfs, bash }:
 
 stdenv.mkDerivation {
   name = "cerana-scripts-${cerana.rev}";
 
   src = cerana.src;
 
-  buildPhase = ''
-    substituteInPlace $src/boot/scripts/gen-hostid.sh --replace "uuidgen" "${utillinux}/bin/uuidgen"
-    substituteInPlace $src/boot/scripts/gen-hostid.sh --replace "tr" "${coreutils}/bin/tr"
-  '';
-
   installPhase = ''
     make DESTDIR=$out -C $src/boot install
+    substituteInPlace $out/scripts/gen-hostid.sh --replace "uuidgen" "${utillinux}/bin/uuidgen"
+    substituteInPlace $out/scripts/gen-hostid.sh --replace "tr" "${coreutils}/bin/tr"
+    substituteInPlace $out/scripts/init-zpools.sh --replace "udevadm" "${systemd}/bin/udevadm"
+    substituteInPlace $out/scripts/init-zpools.sh --replace "grep" "${gnugrep}/bin/grep"
+    substituteInPlace $out/scripts/init-zpools.sh --replace "awk" "${gawk}/bin/gawk"
+    substituteInPlace $out/scripts/init-zpools.sh --replace "zfs" "${zfs}/bin/zfs"
+    substituteInPlace $out/scripts/init-zpools.sh --replace "zpool" "${zfs}/bin/zpool"
+    substituteInPlace $out/scripts/init-zpools.sh --replace "/bin/bash" "${bash}/bin/bash"
+    substituteInPlace $out/scripts/init-zpools.sh --replace "lsblk" "${utillinux}/bin/lsblk"
   '';
 
   meta = with stdenv.lib; {
