@@ -122,6 +122,7 @@
   ./services/backup/sitecopy-backup.nix
   ./services/backup/tarsnap.nix
   ./services/backup/znapzend.nix
+  ./services/cerana/pool.nix
   ./services/cluster/fleet.nix
   ./services/cluster/kubernetes.nix
   ./services/cluster/panamax.nix
