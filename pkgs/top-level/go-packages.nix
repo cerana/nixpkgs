@@ -450,11 +450,11 @@ let
   };
 
   cerana = buildFromGitHub {
-    rev = "181_boot_unit_files";
-    version = "2016-06-02";
+    rev = "187_boot_time_config";
+    version = "2016-06-03";
     owner = "cerana";
     repo = "cerana";
-    sha256 = "101winq7351fk6z8d1sdmbakpgasphsnvgak540ipzwgkb0rvxd8";
+    sha256 = "00ccf4iz2jhy8mpllbmnrvm0dggchb0i3a3yfg592pmff991ffgg";
     goPackagePath = "github.com/cerana/cerana";
 
     preConfigure = ''
