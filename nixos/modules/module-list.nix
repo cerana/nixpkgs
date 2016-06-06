@@ -122,6 +122,10 @@
   ./services/backup/sitecopy-backup.nix
   ./services/backup/tarsnap.nix
   ./services/backup/znapzend.nix
+  ./services/cerana/coordinator.nix
+  ./services/cerana/metrics-provider.nix
+  ./services/cerana/systemd-provider.nix
+  ./services/cerana/zfs-provider.nix
   ./services/cerana/pool.nix
   ./services/cluster/fleet.nix
   ./services/cluster/kubernetes.nix
