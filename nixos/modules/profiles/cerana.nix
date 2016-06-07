@@ -14,14 +14,14 @@
 
   security.apparmor.enable = false;
 
-  # Commented out for development puroposes
-  #networking.useDHCP = false;
-
   services.ceranapool.enable = true;
+  services.cerananet.enable = true;
   services.ceranaCoordinator.enable = true;
   services.ceranaMetricsProvider.enable = true;
   services.ceranaZfsProvider.enable = true;
   services.ceranaSystemdProvider.enable = true;
+
+  systemd.network.enable = true;
 
   # For development puroposes only
   services.sshd.enable = true;
