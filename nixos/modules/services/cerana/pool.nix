@@ -6,11 +6,11 @@ let
   cfg = config.services.ceranapool;
 in
 {
-  options.services.ceranapool.enable = mkEnableOption "CeranaPool";
+  options.services.ceranapool.enable = mkEnableOption "Cerana Pool Configuration";
   
   config = mkIf cfg.enable {
     systemd.services.ceranapool = {
-      description = "CeranaPool";
+      description = "Cerana Pool Configuration";
       path = [ pkgs.cerana-scripts ];
       requiredBy = [ "network-pre.target" "multi-user.target" "sysinit.target" "local-fs-pre.target" "zfs-import.target" "systemd-journald.service" "basic.target" "ntpd.service" "sshd.service" "time-sync.service" "getty.target" "ip-up.target" ];
       before = [ "sshd.service" "ntpd.service" "local-fs.target" ];
