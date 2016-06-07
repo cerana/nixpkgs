@@ -17,6 +17,8 @@ stdenv.mkDerivation {
     substituteInPlace $out/scripts/init-zpools.sh --replace "/bin/bash" "${bash}/bin/bash"
     substituteInPlace $out/scripts/init-zpools.sh --replace "lsblk" "${utillinux}/bin/lsblk"
     substituteInPlace $out/scripts/init-zpools.sh --replace "sgdisk" "${gptfdisk}/sbin/sgdisk"
+    substituteInPlace $out/scripts/net-init.sh --replace "grep" "${gnugrep}/bin/grep"
+    substituteInPlace $out/scripts/net-init.sh --replace "awk" "${gawk}/bin/gawk"
   '';
 
   meta = with stdenv.lib; {

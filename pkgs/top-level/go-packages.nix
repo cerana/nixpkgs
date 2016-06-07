@@ -451,10 +451,10 @@ let
 
   cerana = buildFromGitHub {
     rev = "187_boot_time_config";
-    version = "2016-06-03";
+    version = "2016-06-06";
     owner = "cerana";
     repo = "cerana";
-    sha256 = "00ccf4iz2jhy8mpllbmnrvm0dggchb0i3a3yfg592pmff991ffgg";
+    sha256 = "1jncmxgd5xh361wzz9q3fy8m75sgi8j47vrvsa972h7pak5a1xlg";
     goPackagePath = "github.com/cerana/cerana";
 
     preConfigure = ''
