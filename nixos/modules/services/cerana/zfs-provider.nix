@@ -10,12 +10,12 @@ in
 
   config = mkIf cfg.enable {
     systemd.services.ceranaZfsProvider = {
-      description = "ceranaZfsProvider";
+      description = "Ceranai ZFS Provider";
       wantedBy = [ "multi-user.target" ];
-      after = [ "network.target" ];
+      after = [ "ceranaNodeCoordinator.service" ];
       serviceConfig = {
         Type = "simple";
-        ExecStart = "${pkgs.cerana}/bin/zfs-provider -n zfs-provider -s /tmp/cerana -u unix://tmp/cerana/coordinator/coordinator.sock";
+        ExecStart = "${pkgs.cerana}/bin/zfs-provider -n zfs-provider -s /task-socket/node-coordinator/ -u unix:///task-socket/node-coordinator/coordinator/coordinator.sock";
       };
     };
   };

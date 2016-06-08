@@ -3,19 +3,20 @@
 with lib;
 
 let
-  cfg = config.services.ceranaCoordinator;
+  cfg = config.services.ceranaNodeCoordinator;
 in
 {
-  options.services.ceranaCoordinator.enable = mkEnableOption "ceranaCoordinator";
+  options.services.ceranaNodeCoordinator.enable = mkEnableOption "ceranaNodeCoordinator";
 
   config = mkIf cfg.enable {
-    systemd.services.ceranaCoordinator = {
-      description = "ceranaCoordinator";
+    systemd.services.ceranaNodeCoordinator = {
+      description = "Cerana Node Coordinator";
       wantedBy = [ "multi-user.target" ];
-      after = [ "network.target" ];
+      after = [ "cerananet.service" ];
       serviceConfig = {
         Type = "simple";
-        ExecStart = "${pkgs.cerana}/bin/coordinator -n node-coord -t 10 -s /tmp/cerana";
+        PreExec = "${pkgs.coreutils}/bin/mkdir -p /task-socket/node-coordinator/";
+        ExecStart = "${pkgs.cerana}/bin/coordinator -n node-coord -t 10 -s /task-socket/node-coordinator/";
       };
     };
   };

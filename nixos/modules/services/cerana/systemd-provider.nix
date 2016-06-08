@@ -10,14 +10,14 @@ in
 
   config = mkIf cfg.enable {
     systemd.services.ceranaSystemdProvider = {
-      description = "ceranaSystemdProvider";
+      description = "Cerana Systemd Provider";
       wantedBy = [ "multi-user.target" ];
-      after = [ "network.target" ];
+      after = [ "ceranaNodeCoordinator.service" ];
       serviceConfig = {
         Type = "simple";
         ExecStart = ''
-           ${pkgs.cerana}/bin/systemd-provider -n systemd-provider -s /tmp/cerana \
-           -u unix://tmp/cerana/coordinator/coordinator.sock -d /data/services
+           ${pkgs.cerana}/bin/systemd-provider -n systemd-provider -s /task-socket/node-coordinator/ \
+           -u unix:///task-socket/node-coordinator//coordinator/coordinator.sock -d /data/services
            '';
       };
     };
