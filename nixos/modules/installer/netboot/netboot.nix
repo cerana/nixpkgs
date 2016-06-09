@@ -43,6 +43,21 @@ with lib;
 
     system.build.netbootIpxeScript = pkgs.writeTextDir "netboot.ipxe" "#!ipxe\nkernel bzImage console=ttyS0 vga=794 cerana.mgmt_mac=\${mac} ${toString config.boot.kernelParams}\ninitrd initrd\nboot";
 
+    system.build.ceranaGrubConfig = pkgs.writeTextDir "menu.lst"
+''
+default 0
+timeout 10
+min_mem64 1024
+
+title CeranaOS Rescue Mode
+   kernel /bzImage ${toString config.boot.kernelParams} cerana.rescue
+   module /initrd
+
+title CeranaOS Cluster Bootstrap
+   kernel /bzImage ${toString config.boot.kernelParams} cerana.cluster_bootstrap
+   module /initrd
+'';
+
     boot.loader.timeout = 10;
 
     boot.postBootCommands =
