@@ -271,7 +271,7 @@ with stdenv.lib;
   # Security related features.
   RANDOMIZE_BASE y
   STRICT_DEVMEM y # Filter access to /dev/mem
-  SECURITY_SELINUX_BOOTPARAM_VALUE 1 # Disable SELinux by default
+  SECURITY_SELINUX_BOOTPARAM_VALUE 0 # Disable SELinux by default
   DEVKMEM n # Disable /dev/kmem
   ${if versionOlder version "3.14" then ''
     CC_STACKPROTECTOR? y # Detect buffer overflows on the stack
@@ -283,7 +283,8 @@ with stdenv.lib;
   ''}
 
   # AppArmor support
-  SECURITY_APPARMOR n
+  SECURITY_APPARMOR y
+  DEFAULT_SECURITY_APPARMOR y
 
   # Microcode loading support
   MICROCODE y
