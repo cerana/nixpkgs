@@ -16,7 +16,7 @@ in
       serviceConfig = {
         Type = "simple";
         ExecStart = ''
-           ${pkgs.cerana}/bin/systemd-provider -n systemd-provider -s /task-socket/node-coordinator/ \
+           ${pkgs.cerana.bin}/bin/systemd-provider -n systemd-provider -s /task-socket/node-coordinator/ \
            -u unix:///task-socket/node-coordinator//coordinator/coordinator.sock -d /data/services
            '';
       };
