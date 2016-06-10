@@ -16,7 +16,7 @@ in
       serviceConfig = {
         Type = "simple";
         PreExec = "${pkgs.coreutils}/bin/mkdir -p /task-socket/node-coordinator/";
-        ExecStart = "${pkgs.cerana}/bin/coordinator -n node-coord -t 10 -s /task-socket/node-coordinator/";
+        ExecStart = "${pkgs.cerana.bin}/bin/coordinator -n node-coord -t 10 -s /task-socket/node-coordinator/";
       };
     };
   };
