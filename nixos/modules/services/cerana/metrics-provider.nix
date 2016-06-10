@@ -15,7 +15,7 @@ in
       after = [ "ceranaNodeCoordinator.service" ];
       serviceConfig = {
         Type = "simple";
-        ExecStart = "${pkgs.cerana}/bin/metrics-provider -n metrics-provider -s /task-socket/node-coordinator/ -u unix:///task-socket/node-coordinator/coordinator/coordinator.sock";
+        ExecStart = "${pkgs.cerana.bin}/bin/metrics-provider -n metrics-provider -s /task-socket/node-coordinator/ -u unix:///task-socket/node-coordinator/coordinator/coordinator.sock";
       };
     };
   };

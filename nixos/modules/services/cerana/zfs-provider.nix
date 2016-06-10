@@ -15,7 +15,7 @@ in
       after = [ "ceranaNodeCoordinator.service" ];
       serviceConfig = {
         Type = "simple";
-        ExecStart = "${pkgs.cerana}/bin/zfs-provider -n zfs-provider -s /task-socket/node-coordinator/ -u unix:///task-socket/node-coordinator/coordinator/coordinator.sock";
+        ExecStart = "${pkgs.cerana.bin}/bin/zfs-provider -n zfs-provider -s /task-socket/node-coordinator/ -u unix:///task-socket/node-coordinator/coordinator/coordinator.sock";
       };
     };
   };
