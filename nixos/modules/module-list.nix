@@ -119,9 +119,15 @@
   ./services/backup/sitecopy-backup.nix
   ./services/backup/tarsnap.nix
   ./services/backup/znapzend.nix
+  ./services/cerana/clusterconf-provider.nix
   ./services/cerana/coordinator.nix
+  ./services/cerana/health-provider.nix
+  ./services/cerana/kv-provider.nix
   ./services/cerana/metrics-provider.nix
   ./services/cerana/network.nix
+  ./services/cerana/metrics-provider.nix
+  ./services/cerana/network.nix
+  ./services/cerana/statspusher.nix
   ./services/cerana/systemd-provider.nix
   ./services/cerana/zfs-provider.nix
   ./services/cerana/pool.nix
