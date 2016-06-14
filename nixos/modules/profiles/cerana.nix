@@ -14,10 +14,15 @@
 
   services.ceranapool.enable = true;
   services.cerananet.enable = true;
-  services.ceranaNodeCoordinator.enable = true;
+  services.ceranaClusterConfProvider.enable = true;
+  services.ceranaHealthProvider.enable = true;
+  services.ceranaKvProvider.enable = true;
   services.ceranaMetricsProvider.enable = true;
-  services.ceranaZfsProvider.enable = true;
+  services.ceranaNodeCoordinator.enable = true;
+  services.ceranaStatsPusher.enable = true;
   services.ceranaSystemdProvider.enable = true;
+  services.ceranaZfsProvider.enable = true;
+  services.consul.enable = true;
 
   systemd.network.enable = true;
 
