@@ -121,6 +121,7 @@
   ./services/backup/tarsnap.nix
   ./services/backup/znapzend.nix
   ./services/cerana/clusterconf-provider.nix
+  ./services/cerana/consul.nix
   ./services/cerana/coordinator.nix
   ./services/cerana/health-provider.nix
   ./services/cerana/kv-provider.nix
