@@ -4,6 +4,12 @@ with lib;
 
 let
   cfg = config.services.ceranaClusterConfProvider;
+  name = "clusterconfig-provider";
+  cfgdir = "/data/config/";
+  cfgfile = "clusterconfig-provider.json";
+  socketdir = "/task-socket/node-coordinator/";
+  socket = "coordinator/node-coord.sock";
+  daemon = "${pkgs.cerana.bin}/bin/clusterconfig-provider";
 in
 {
   options.services.ceranaClusterConfProvider.enable = mkEnableOption "ceranaClusterConfProvider";
@@ -16,12 +22,17 @@ in
       after = [ "ceranaNodeCoordinator.service" ];
       serviceConfig = {
         Type = "simple";
-        ExecStart = ''
-                ${pkgs.cerana.bin}/bin/clusterconfig-provider \
-                -n clusterconfig-provider -s /task-socket/node-coordinator/ \
-                -u unix:///task-socket/node-coordinator/coordinator/coordinator.sock
-                '';
+        ExecStart = "${daemon} -c ${cfgdir}${cfgfile}";
       };
+      preStart = ''
+        if [ ! -f ${cfgdir}${cfgfile} ]; then
+                echo "{" > ${cfgdir}${cfgfile}
+                echo '  "service_name": "${name}",' >> ${cfgdir}${cfgfile}
+                echo '  "socket_dir": "${socketdir}",' >> ${cfgdir}${cfgfile}
+                echo '  "coordinator_url": "unix://${socketdir}${socket}"' >> ${cfgdir}${cfgfile}
+                echo "}" >> ${cfgdir}${cfgfile}
+        fi
+        '';
     };
   };
 }
