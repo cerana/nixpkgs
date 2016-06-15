@@ -22,7 +22,7 @@
   services.ceranaStatsPusher.enable = true;
   services.ceranaSystemdProvider.enable = true;
   services.ceranaZfsProvider.enable = true;
-  services.consul.enable = true;
+  services.ceranaConsul.enable = true;
 
   systemd.network.enable = true;
 
