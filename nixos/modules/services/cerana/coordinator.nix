@@ -4,6 +4,11 @@ with lib;
 
 let
   cfg = config.services.ceranaNodeCoordinator;
+  name = "node-coord";
+  cfgdir = "/data/config/";
+  cfgfile = "coordinator.json";
+  socketdir = "/task-socket/node-coordinator/";
+  daemon = "${pkgs.cerana.bin}/bin/coordinator";
 in
 {
   options.services.ceranaNodeCoordinator.enable = mkEnableOption "ceranaNodeCoordinator";
@@ -15,9 +20,19 @@ in
       after = [ "cerananet.service" ];
       serviceConfig = {
         Type = "simple";
-        PreExec = "${pkgs.coreutils}/bin/mkdir -p /task-socket/node-coordinator/";
-        ExecStart = "${pkgs.cerana.bin}/bin/coordinator -n node-coord -t 10 -s /task-socket/node-coordinator/";
+        ExecStart = "${daemon} -c ${cfgdir}${cfgfile}";
       };
+      preStart = ''
+        ${pkgs.coreutils}/bin/mkdir -p ${socketdir}
+        ${pkgs.coreutils}/bin/mkdir -p ${cfgdir}
+        if [ ! -f ${cfgdir}${cfgfile} ]; then
+                echo "{" > ${cfgdir}${cfgfile}
+                echo '  "service_name": "${name}",' >> ${cfgdir}${cfgfile}
+                echo '  "request_timeout": 10,' >> ${cfgdir}${cfgfile}
+                echo '  "socket_dir": "${socketdir}"' >> ${cfgdir}${cfgfile}
+                echo "}" >> ${cfgdir}${cfgfile}
+        fi
+        '';
     };
   };
 }
