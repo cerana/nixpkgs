@@ -2,7 +2,7 @@
 
 buildGoPackage rec {
   name = "cerana-${version}";
-     version = "2016-06-14";
+     version = "2016-06-15";
      owner = "cerana";
      repo = "cerana";
      rev = "187_boot_time_config";
@@ -13,7 +13,7 @@ buildGoPackage rec {
     owner = "cerana";
     repo = "cerana";
     inherit rev;
-    sha256 = "07n6bzma7n3x2mxh5afy9b1a4jda2y8qyc21al038h4cf79gw5dj";
+    sha256 = "14ly1qk1wxdx60lms0p2pldm1azjj2lg4mkkjl0mlbx61lh5py17";
   };
 
   preConfigure = ''
