@@ -7,8 +7,8 @@ let
   name = "clusterconfig-provider";
   cfgdir = "/data/config/";
   cfgfile = "clusterconfig-provider.json";
-  socketdir = "/task-socket/node-coordinator/";
-  socket = "coordinator/node-coord.sock";
+  socketdir = "/task-socket/l2-coordinator/";
+  socket = "coordinator/l2-coord.sock";
   daemon = "${pkgs.cerana.bin}/bin/clusterconfig-provider";
 in
 {
@@ -19,7 +19,7 @@ in
       description = "Cerana Cluster Configuration Provider";
       wantedBy = [ "multi-user.target" ];
       wants = [ "ceranaKvProvider.service" ];
-      after = [ "ceranaNodeCoordinator.service" ];
+      after = [ "ceranaL2Coordinator.service" ];
       serviceConfig = {
         Type = "simple";
         ExecStart = "${daemon} -c ${cfgdir}${cfgfile}";
