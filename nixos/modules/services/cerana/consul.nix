@@ -12,7 +12,6 @@ in
     systemd.services.ceranaConsul = {
       description = "Cerana Consul";
       wantedBy = [ "multi-user.target" ];
-      wants = [ "consul.service" ];
       after = [ "ceranaNodeCoordinator.service" ];
       serviceConfig = {
         Type = "simple";
