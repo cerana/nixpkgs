@@ -17,7 +17,9 @@ in
         Type = "simple";
         ExecStartPre = "${pkgs.coreutils}/bin/mkdir -p /data/datasets/consul";
         ExecStart = ''
-                ${pkgs.consul.bin}/bin/consul agent -server -data-dir /data/datasets/consul
+                ${pkgs.consul.bin}/bin/consul agent -server \
+                  -data-dir /data/datasets/consul \
+                  -advertise 127.0.0.1
                 '';
       };
     };
