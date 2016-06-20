@@ -7,8 +7,8 @@ let
   name = "kv-provider";
   cfgdir = "/data/config/";
   cfgfile = "kv-provider.json";
-  socketdir = "/task-socket/node-coordinator/";
-  socket = "coordinator/node-coord.sock";
+  socketdir = "/task-socket/l2-coordinator/";
+  socket = "coordinator/l2-coord.sock";
   daemon = "${pkgs.cerana.bin}/bin/kv-provider";
 in
 {
@@ -19,7 +19,7 @@ in
       description = "Cerana Kv Provider";
       wantedBy = [ "multi-user.target" ];
       wants = [ "ceranaConsul.service" ];
-      after = [ "ceranaNodeCoordinator.service" ];
+      after = [ "ceranaL2Coordinator.service" "ceranaConsul.service" ];
       serviceConfig = {
         Type = "simple";
         ExecStart = "${daemon} -c ${cfgdir}${cfgfile}";
