@@ -18,7 +18,7 @@ in
     systemd.services.ceranaKvProvider = {
       description = "Cerana Kv Provider";
       wantedBy = [ "multi-user.target" ];
-      wants = [ "consul.service" ];
+      wants = [ "ceranaConsul.service" ];
       after = [ "ceranaNodeCoordinator.service" ];
       serviceConfig = {
         Type = "simple";
