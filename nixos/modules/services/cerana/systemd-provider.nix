@@ -30,7 +30,7 @@ in
                 echo '  "service_name": "${name}",' >> ${cfgdir}${cfgfile}
                 echo '  "socket_dir": "${socketdir}",' >> ${cfgdir}${cfgfile}
                 echo '  "coordinator_url": "unix://${socketdir}${socket}",' >> ${cfgdir}${cfgfile}
-                echo '  "unit_file_dir": "/data/services",' >> ${cfgdir}${cfgfile}
+                echo '  "unit_file_dir": "/data/services"' >> ${cfgdir}${cfgfile}
                 echo "}" >> ${cfgdir}${cfgfile}
         fi
         '';
