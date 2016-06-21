@@ -19,6 +19,7 @@
   services.ceranaKvProvider.enable = true;
   services.ceranaMetricsProvider.enable = true;
   services.ceranaNodeCoordinator.enable = true;
+  services.ceranaL2Coordinator.enable = true;
   services.ceranaStatsPusher.enable = true;
   services.ceranaSystemdProvider.enable = true;
   services.ceranaZfsProvider.enable = true;
