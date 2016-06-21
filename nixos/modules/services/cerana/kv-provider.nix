@@ -17,7 +17,7 @@ in
   config = mkIf cfg.enable {
     systemd.services.ceranaKvProvider = {
       description = "Cerana Kv Provider";
-      wantedBy = [ "multi-user.target" ];
+      wantedBy = [ "ceranaLayer2.target" ];
       wants = [ "ceranaConsul.service" ];
       after = [ "ceranaL2Coordinator.service" "ceranaConsul.service" ];
       serviceConfig = {
