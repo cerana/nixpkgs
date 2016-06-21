@@ -17,7 +17,7 @@ in
   config = mkIf cfg.enable {
     systemd.services.ceranaL2Coordinator = {
       description = "Cerana Layer 2 Coordinator";
-      wantedBy = [ "multi-user.target" ];
+      wantedBy = [ "ceranaLayer2.target" ];
       after = [ "cerananet.service" ];
       serviceConfig = {
         Type = "simple";

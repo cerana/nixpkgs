@@ -17,7 +17,7 @@ in
   config = mkIf cfg.enable {
     systemd.services.ceranaClusterConfProvider = {
       description = "Cerana Cluster Configuration Provider";
-      wantedBy = [ "multi-user.target" ];
+      wantedBy = [ "ceranaLayer2.target" ];
       wants = [ "ceranaKvProvider.service" ];
       after = [ "ceranaL2Coordinator.service" ];
       serviceConfig = {
