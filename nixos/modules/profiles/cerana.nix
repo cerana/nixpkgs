@@ -25,6 +25,7 @@
   services.ceranaConsul.enable = true;
 
   systemd.network.enable = true;
+  networking.useDHCP = false;
 
   # For development puroposes only
   services.sshd.enable = true;
