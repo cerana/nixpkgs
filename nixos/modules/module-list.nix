@@ -128,8 +128,8 @@
   ./services/cerana/health-provider.nix
   ./services/cerana/kv-provider.nix
   ./services/cerana/l2-coordinator.nix
+  ./services/cerana/l2-services.nix
   ./services/cerana/metrics-provider.nix
-  ./services/cerana/network.nix
   ./services/cerana/metrics-provider.nix
   ./services/cerana/network.nix
   ./services/cerana/statspusher.nix

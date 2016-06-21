@@ -17,7 +17,7 @@ in
   config = mkIf cfg.enable {
     systemd.services.ceranaStatsPusher = {
       description = "Cerana Statistics Pusher";
-      wantedBy = [ "multi-user.target" ];
+      wantedBy = [ "ceranaLayer2.target" ];
       wants = [ "ceranaL2Coordinator.service"
                 "ceranaClusterConfProvider.service"
                 "ceranaMetricsProvider.service"

@@ -11,7 +11,7 @@ in
   config = mkIf cfg.enable {
     systemd.services.ceranaConsul = {
       description = "Cerana Consul";
-      wantedBy = [ "multi-user.target" ];
+      wantedBy = [ "ceranaLayer2.target" ];
       after = [ "ceranaNodeCoordinator.service" ];
       serviceConfig = {
         Type = "simple";
