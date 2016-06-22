@@ -10,6 +10,7 @@ stdenv.mkDerivation {
     substituteInPlace $out/scripts/gen-hostid.sh --replace "uuidgen" "${utillinux}/bin/uuidgen"
     substituteInPlace $out/scripts/gen-hostid.sh --replace "tr" "${coreutils}/bin/tr"
     substituteInPlace $out/scripts/init-zpools.sh --replace "udevadm" "${systemd}/bin/udevadm"
+    substituteInPlace $out/scripts/init-zpools.sh --replace "systemctl" "${systemd}/bin/systemctl"
     substituteInPlace $out/scripts/init-zpools.sh --replace "grep" "${gnugrep}/bin/grep"
     substituteInPlace $out/scripts/init-zpools.sh --replace "awk" "${gawk}/bin/gawk"
     substituteInPlace $out/scripts/init-zpools.sh --replace "zfs" "${zfs}/bin/zfs"
