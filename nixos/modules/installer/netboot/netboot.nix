@@ -9,6 +9,7 @@ with lib;
 
   config = {
 
+    boot.initrd.compressor = "${pkgs.pigz}/bin/pigz -R -b 1024 ";
     boot.loader.grub.version = 2;
 
     # Don't build the GRUB menu builder script, since we don't need it
