@@ -49,13 +49,15 @@ with lib;
 default 0
 timeout 10
 min_mem64 1024
+serial
+terminal serial
 
 title CeranaOS Rescue Mode
-   kernel /bzImage ${toString config.boot.kernelParams} cerana.rescue
+   kernel /bzImage ${toString config.boot.kernelParams} cerana.rescue console=ttyS0
    module /initrd
 
 title CeranaOS Cluster Bootstrap
-   kernel /bzImage ${toString config.boot.kernelParams} cerana.cluster_bootstrap
+   kernel /bzImage ${toString config.boot.kernelParams} cerana.cluster_bootstrap console=ttyS0
    module /initrd
 '';
 
