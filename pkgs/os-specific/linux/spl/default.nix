@@ -20,10 +20,10 @@ stdenv.mkDerivation rec {
   version = "0.6.5.7";
 
   src = fetchFromGitHub {
-    owner = "zfsonlinux";
+    owner = "cerana";
     repo = "spl";
-    rev = "spl-${version}";
-    sha256 = "0i9ak4wqn444i6362xq5xl0msvcck8qqypp0fynrxq8mddzypwps";
+    rev = "5f17c8bc04f5c527b9fcc829b2447480893518d6";
+    sha256 = "0iy2ycngxwbqmwqnh597wrbmv1amd4y9dipppfpgs157m3n3vmnb";
   };
 
   patches = [ ./const.patch ./install_prefix.patch ];
