@@ -1,0 +1,439 @@
+commit 693740048ab45a97b04b5c1b79173226a05d1af5
+Author: Albert Lee <trisk@omniti.com>
+Date:   Mon Apr 18 11:43:08 2016 -0400
+
+    Delegation namespace for linux-4.4.y
+
+diff --git a/fs/proc/namespaces.c b/fs/proc/namespaces.c
+index 1b0ea4a..9d8ce29 100644
+--- a/fs/proc/namespaces.c
++++ b/fs/proc/namespaces.c
+@@ -8,6 +8,7 @@
+ #include <linux/ipc_namespace.h>
+ #include <linux/pid_namespace.h>
+ #include <linux/user_namespace.h>
++#include <linux/deleg_namespace.h>
+ #include "internal.h"
+ 
+ 
+@@ -28,6 +29,9 @@ static const struct proc_ns_operations *ns_entries[] = {
+ 	&userns_operations,
+ #endif
+ 	&mntns_operations,
++#ifdef CONFIG_DELEG_NS
++	&delegns_operations,
++#endif
+ };
+ 
+ static const char *proc_ns_follow_link(struct dentry *dentry, void **cookie)
+diff --git a/include/linux/deleg_namespace.h b/include/linux/deleg_namespace.h
+new file mode 100644
+index 0000000..24b406f
+--- /dev/null
++++ b/include/linux/deleg_namespace.h
+@@ -0,0 +1,47 @@
++#ifndef _LINUX_DELEG_NAMESPACE_H
++#define _LINUX_DELEG_NAMESPACE_H
++
++#include <linux/kref.h>
++#include <linux/ns_common.h>
++
++struct deleg_namespace {
++	struct kref kref;
++	struct list_head list;
++	struct ns_common ns;
++};
++
++struct deleg_operations {
++	struct list_head list;
++	int (*init)(struct deleg_namespace *ns);
++	void (*exit)(struct deleg_namespace *ns);
++};
++
++extern struct deleg_namespace init_deleg_ns;
++
++extern int register_deleg_provider(struct deleg_operations *ops);
++extern void unregister_deleg_provider(struct deleg_operations *ops);
++
++extern struct deleg_namespace *copy_deleg_ns(unsigned long,
++    struct deleg_namespace *);
++extern void free_deleg_ns(struct kref *);
++
++#ifdef CONFIG_DELEG_NS
++static inline void get_deleg_ns(struct deleg_namespace *ns)
++{
++	kref_get(&ns->kref);
++}
++
++static inline void put_deleg_ns(struct deleg_namespace *ns)
++{
++	kref_put(&ns->kref, free_deleg_ns);
++}
++#else
++static inline void get_deleg_ns(struct deleg_namespace *ns)
++{
++}
++static inline void put_deleg_ns(struct deleg_namespace *ns)
++{
++}
++#endif
++
++#endif /* _LINUX_DELEG_NAMESPACE_H */
+diff --git a/include/linux/nsproxy.h b/include/linux/nsproxy.h
+index 35fa08f..cde09e3 100644
+--- a/include/linux/nsproxy.h
++++ b/include/linux/nsproxy.h
+@@ -8,6 +8,7 @@ struct mnt_namespace;
+ struct uts_namespace;
+ struct ipc_namespace;
+ struct pid_namespace;
++struct deleg_namespace;
+ struct fs_struct;
+ 
+ /*
+@@ -32,7 +33,8 @@ struct nsproxy {
+ 	struct ipc_namespace *ipc_ns;
+ 	struct mnt_namespace *mnt_ns;
+ 	struct pid_namespace *pid_ns_for_children;
+-	struct net 	     *net_ns;
++	struct net	     *net_ns;
++	struct deleg_namespace *deleg_ns;
+ };
+ extern struct nsproxy init_nsproxy;
+ 
+diff --git a/include/linux/proc_ns.h b/include/linux/proc_ns.h
+index 42dfc61..16c4d85 100644
+--- a/include/linux/proc_ns.h
++++ b/include/linux/proc_ns.h
+@@ -24,6 +24,7 @@ extern const struct proc_ns_operations ipcns_operations;
+ extern const struct proc_ns_operations pidns_operations;
+ extern const struct proc_ns_operations userns_operations;
+ extern const struct proc_ns_operations mntns_operations;
++extern const struct proc_ns_operations delegns_operations;
+ 
+ /*
+  * We always define these enumerators
+@@ -34,6 +35,7 @@ enum {
+ 	PROC_UTS_INIT_INO	= 0xEFFFFFFEU,
+ 	PROC_USER_INIT_INO	= 0xEFFFFFFDU,
+ 	PROC_PID_INIT_INO	= 0xEFFFFFFCU,
++	PROC_DELEG_INIT_INO	= 0xEFFFFFFBU,
+ };
+ 
+ #ifdef CONFIG_PROC_FS
+diff --git a/include/uapi/linux/sched.h b/include/uapi/linux/sched.h
+index cc89dde..02e0c47 100644
+--- a/include/uapi/linux/sched.h
++++ b/include/uapi/linux/sched.h
+@@ -9,6 +9,7 @@
+ #define CLONE_FS	0x00000200	/* set if fs info shared between processes */
+ #define CLONE_FILES	0x00000400	/* set if open files shared between processes */
+ #define CLONE_SIGHAND	0x00000800	/* set if signal handlers and blocked signals shared */
++#define CLONE_NEWDELEG  0x00001000	/* New delegation namespace */
+ #define CLONE_PTRACE	0x00002000	/* set if we want to let tracing continue on the child too */
+ #define CLONE_VFORK	0x00004000	/* set if the parent wants the child to wake it up on mm_release */
+ #define CLONE_PARENT	0x00008000	/* set if we want to have the same parent as the cloner */
+diff --git a/init/Kconfig b/init/Kconfig
+index 235c7a2..76d0084 100644
+--- a/init/Kconfig
++++ b/init/Kconfig
+@@ -1223,6 +1223,12 @@ config NET_NS
+ 	  Allow user space to create what appear to be multiple instances
+ 	  of the network stack.
+ 
++config DELEG_NS
++	bool "Delegation namespace"
++	default y
++	help
++	  Allow tasks in the namespace to access delegated resources.
++
+ endif # NAMESPACES
+ 
+ config SCHED_AUTOGROUP
+diff --git a/kernel/Makefile b/kernel/Makefile
+index 53abf00..29b7154 100644
+--- a/kernel/Makefile
++++ b/kernel/Makefile
+@@ -61,6 +61,7 @@ obj-$(CONFIG_CPUSETS) += cpuset.o
+ obj-$(CONFIG_UTS_NS) += utsname.o
+ obj-$(CONFIG_USER_NS) += user_namespace.o
+ obj-$(CONFIG_PID_NS) += pid_namespace.o
++obj-$(CONFIG_DELEG_NS) += deleg_namespace.o
+ obj-$(CONFIG_IKCONFIG) += configs.o
+ obj-$(CONFIG_SMP) += stop_machine.o
+ obj-$(CONFIG_KPROBES_SANITY_TEST) += test_kprobes.o
+diff --git a/kernel/deleg_namespace.c b/kernel/deleg_namespace.c
+new file mode 100644
+index 0000000..9a4f959
+--- /dev/null
++++ b/kernel/deleg_namespace.c
+@@ -0,0 +1,197 @@
++/*
++ * Copyright 2015 OmniTI Computer Consulting, Inc. All rights reserved.
++ */
++#include <linux/list.h>
++#include <linux/slab.h>
++#include <linux/nsproxy.h>
++#include <linux/proc_ns.h>
++#include <linux/deleg_namespace.h>
++
++static LIST_HEAD(deleg_operations_list);
++DEFINE_MUTEX(delegns_mutex);
++
++LIST_HEAD(deleg_namespace_list);
++EXPORT_SYMBOL(deleg_namespace_list);
++
++struct deleg_namespace init_deleg_ns = {
++	.kref = {
++		.refcount	= ATOMIC_INIT(2),
++	},
++	.ns.inum = PROC_DELEG_INIT_INO,
++#ifdef CONFIG_DELEG_NS
++	.ns.ops = &delegns_operations,
++#endif
++};
++EXPORT_SYMBOL(init_deleg_ns);
++
++static int __init deleg_ns_init(void)
++{
++	mutex_lock(&delegns_mutex);
++	list_add_tail(&init_deleg_ns.list, &deleg_namespace_list);
++	mutex_unlock(&delegns_mutex);
++
++	return 0;
++}
++__initcall(deleg_ns_init);
++
++static struct deleg_namespace *create_deleg_ns(void)
++{
++	struct deleg_namespace *dlgns;
++
++	dlgns = kmalloc(sizeof(struct deleg_namespace), GFP_KERNEL);
++	if (dlgns != NULL)
++		kref_init(&dlgns->kref);
++
++	return dlgns;
++}
++
++static struct deleg_namespace *clone_deleg_ns(struct deleg_namespace *old_ns)
++{
++	struct deleg_namespace *dlgns;
++	int err;
++
++	dlgns = create_deleg_ns();
++	if (dlgns == NULL)
++		return ERR_PTR(-ENOMEM);
++
++	err = ns_alloc_inum(&dlgns->ns);
++	if (err != 0) {
++		kfree(dlgns);
++		return ERR_PTR(err);
++	}
++
++	dlgns->ns.ops = &delegns_operations;
++
++	return dlgns;
++}
++
++struct deleg_namespace *copy_deleg_ns(unsigned long flags,
++	struct deleg_namespace *old_ns)
++{
++	struct deleg_namespace *new_ns;
++
++	get_deleg_ns(old_ns);
++
++	if (!(flags & CLONE_NEWDELEG))
++		return old_ns;
++
++	mutex_lock(&delegns_mutex);
++	new_ns = clone_deleg_ns(old_ns);
++	if (!IS_ERR(new_ns))
++		list_add_tail(&new_ns->list, &deleg_namespace_list);
++	mutex_unlock(&delegns_mutex);
++	put_deleg_ns(old_ns);
++
++	return new_ns;
++}
++
++void free_deleg_ns(struct kref *kref)
++{
++	struct deleg_namespace *dlgns;
++	struct deleg_operations *ops;
++
++	dlgns = container_of(kref, struct deleg_namespace, kref);
++	mutex_lock(&delegns_mutex);
++	list_del(&dlgns->list);
++	list_for_each_entry(ops, &deleg_operations_list, list)
++	    ops->exit(dlgns);
++	mutex_unlock(&delegns_mutex);
++	ns_free_inum(&dlgns->ns);
++	kfree(dlgns);
++}
++
++static int register_deleg_operations(struct deleg_operations *ops)
++{
++	struct deleg_namespace *dlgns;
++	int error;
++
++	list_add_tail(&ops->list, &deleg_operations_list);
++	list_for_each_entry(dlgns, &deleg_namespace_list, list) {
++	    error = ops->init(dlgns);
++	    if (error < 0)
++		    goto out_undo;
++	}
++out:
++	return error;
++out_undo:
++	list_for_each_entry_continue_reverse(dlgns, &deleg_namespace_list, list)
++		ops->exit(dlgns);
++	goto out;
++}
++
++static void unregister_deleg_operations(struct deleg_operations *ops)
++{
++	struct deleg_namespace *dlgns;
++
++	list_for_each_entry(dlgns, &deleg_namespace_list, list)
++		ops->exit(dlgns);
++	list_del(&ops->list);
++}
++
++int register_deleg_provider(struct deleg_operations *ops)
++{
++	int error = 0;
++
++	mutex_lock(&delegns_mutex);
++	error = register_deleg_operations(ops);
++	mutex_unlock(&delegns_mutex);
++
++	return error;
++}
++EXPORT_SYMBOL(register_deleg_provider);
++
++void unregister_deleg_provider(struct deleg_operations *ops)
++{
++	mutex_lock(&delegns_mutex);
++	unregister_deleg_operations(ops);
++	mutex_unlock(&delegns_mutex);
++}
++EXPORT_SYMBOL(unregister_deleg_provider);
++
++static inline struct deleg_namespace *to_deleg_ns(struct ns_common *ns)
++{
++	return container_of(ns, struct deleg_namespace, ns);
++}
++
++static struct ns_common *delegns_get(struct task_struct *task)
++{
++	struct deleg_namespace *dlgns = NULL;
++	struct nsproxy *nsproxy;
++
++	task_lock(task);
++	nsproxy = task->nsproxy;
++	if (nsproxy != NULL) {
++		dlgns = nsproxy->deleg_ns;
++		get_deleg_ns(dlgns);
++	}
++	task_unlock(task);
++
++	return &dlgns->ns;
++}
++
++static void delegns_put(struct ns_common *ns)
++{
++	put_deleg_ns(to_deleg_ns(ns));
++}
++
++static int delegns_install(struct nsproxy *nsproxy, struct ns_common *ns)
++{
++	struct deleg_namespace *dlgns = to_deleg_ns(ns);
++
++	if (!ns_capable(current_user_ns(), CAP_SYS_ADMIN))
++		return -EPERM;
++
++	get_deleg_ns(dlgns);
++	put_deleg_ns(nsproxy->deleg_ns);
++	nsproxy->deleg_ns = dlgns;
++
++	return 0;
++}
++
++const struct proc_ns_operations delegns_operations = {
++	.name		= "deleg",
++	.type		= CLONE_NEWDELEG,
++	.get		= delegns_get,
++	.put		= delegns_put,
++	.install	= delegns_install,
++};
+diff --git a/kernel/nsproxy.c b/kernel/nsproxy.c
+index 49746c8..e4f69c0 100644
+--- a/kernel/nsproxy.c
++++ b/kernel/nsproxy.c
+@@ -22,6 +22,7 @@
+ #include <linux/pid_namespace.h>
+ #include <net/net_namespace.h>
+ #include <linux/ipc_namespace.h>
++#include <linux/deleg_namespace.h>
+ #include <linux/proc_ns.h>
+ #include <linux/file.h>
+ #include <linux/syscalls.h>
+@@ -39,6 +40,9 @@ struct nsproxy init_nsproxy = {
+ #ifdef CONFIG_NET
+ 	.net_ns			= &init_net,
+ #endif
++#ifdef CONFIG_DELEG_NS
++	.deleg_ns		= &init_deleg_ns,
++#endif
+ };
+ 
+ static inline struct nsproxy *create_nsproxy(void)
+@@ -98,8 +102,17 @@ static struct nsproxy *create_new_namespaces(unsigned long flags,
+ 		goto out_net;
+ 	}
+ 
++	new_nsp->deleg_ns = copy_deleg_ns(flags, tsk->nsproxy->deleg_ns);
++	if (IS_ERR(new_nsp->deleg_ns)) {
++		err = PTR_ERR(new_nsp->deleg_ns);
++		goto out_deleg;
++	}
++
+ 	return new_nsp;
+ 
++out_deleg:
++	if (new_nsp->net_ns)
++		put_net(new_nsp->net_ns);
+ out_net:
+ 	if (new_nsp->pid_ns_for_children)
+ 		put_pid_ns(new_nsp->pid_ns_for_children);
+@@ -128,7 +141,8 @@ int copy_namespaces(unsigned long flags, struct task_struct *tsk)
+ 	struct nsproxy *new_ns;
+ 
+ 	if (likely(!(flags & (CLONE_NEWNS | CLONE_NEWUTS | CLONE_NEWIPC |
+-			      CLONE_NEWPID | CLONE_NEWNET)))) {
++			      CLONE_NEWPID | CLONE_NEWNET |
++			      CLONE_NEWDELEG)))) {
+ 		get_nsproxy(old_ns);
+ 		return 0;
+ 	}
+@@ -165,7 +179,10 @@ void free_nsproxy(struct nsproxy *ns)
+ 		put_ipc_ns(ns->ipc_ns);
+ 	if (ns->pid_ns_for_children)
+ 		put_pid_ns(ns->pid_ns_for_children);
+-	put_net(ns->net_ns);
++	if (ns->net_ns)
++		put_net(ns->net_ns);
++	if (ns->deleg_ns)
++		put_deleg_ns(ns->deleg_ns);
+ 	kmem_cache_free(nsproxy_cachep, ns);
+ }
+ 
+@@ -180,7 +197,8 @@ int unshare_nsproxy_namespaces(unsigned long unshare_flags,
+ 	int err = 0;
+ 
+ 	if (!(unshare_flags & (CLONE_NEWNS | CLONE_NEWUTS | CLONE_NEWIPC |
+-			       CLONE_NEWNET | CLONE_NEWPID)))
++			       CLONE_NEWNET | CLONE_NEWPID |
++			       CLONE_NEWDELEG)))
+ 		return 0;
+ 
+ 	user_ns = new_cred ? new_cred->user_ns : current_user_ns();
