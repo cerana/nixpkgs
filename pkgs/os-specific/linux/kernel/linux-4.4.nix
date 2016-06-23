@@ -9,7 +9,7 @@ import ./generic.nix (args // rec {
     sha256 = "1r96jyvm44615f5zh5sn04zx7y8bllpx12lx1zjkns66i4ddv0rq";
   };
 
-  kernelPatches = args.kernelPatches;
+  kernelPatches = args.kernelPatches ++ [ { name = "delegns"; patch = ./delegns.patch; } ];
 
   features.iwlwifi = true;
   features.efiBootStub = true;
