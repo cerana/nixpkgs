@@ -2,7 +2,7 @@
 , configFile ? "all"
 
 # Userspace dependencies
-, zlib, libuuid
+, zlib, libuuid, attr
 
 # Kernel dependencies
 , kernel ? null, spl ? null
@@ -23,17 +23,17 @@ stdenv.mkDerivation rec {
   version = "0.6.5.7";
 
   src = fetchFromGitHub {
-    owner = "zfsonlinux";
+    owner = "cerana";
     repo = "zfs";
-    rev = "zfs-${version}";
-    sha256 = "17mshxyp8k7i9a7ys0rznhkz83f6650pby9ka48d6gzgcwv9nnsm";
+    rev = "dfaa93277d51c020ec16a6601f06adc4656befe3";
+    sha256 = "0kvw8pvqlm5g41v94cv9kym823fdnxrmcxvd2h864abz12n1cjjw";
   };
 
   patches = [ ./nix-build.patch ];
 
   buildInputs = [ autoreconfHook nukeReferences ]
     ++ optionals buildKernel [ spl ]
-    ++ optionals buildUser [ zlib libuuid ];
+    ++ optionals buildUser [ zlib libuuid attr ];
 
   # for zdb to get the rpath to libgcc_s, needed for pthread_cancel to work
   NIX_CFLAGS_LINK = "-lgcc_s";
