@@ -20,6 +20,7 @@ stdenv.mkDerivation {
     substituteInPlace $out/scripts/init-zpools.sh --replace "sgdisk" "${gptfdisk}/sbin/sgdisk"
     substituteInPlace $out/scripts/net-init.sh --replace "grep" "${gnugrep}/bin/grep"
     substituteInPlace $out/scripts/net-init.sh --replace "awk" "${gawk}/bin/gawk"
+    substituteInPlace $out/bin/fixterm --replace "stty" "${coreutils}/bin/stty"
   '';
 
   meta = with stdenv.lib; {
