@@ -15,12 +15,9 @@ in
       after = [ "ceranaNodeCoordinator.service" ];
       serviceConfig = {
         Type = "simple";
-        ExecStartPre = "${pkgs.coreutils}/bin/mkdir -p /data/datasets/consul";
-        ExecStart = ''
-                ${pkgs.consul.bin}/bin/consul agent -server \
-                  -data-dir /data/datasets/consul \
-                  -advertise 127.0.0.1
-                '';
+        KillMode = "process";
+        KillSignal = "SIGINT";
+        ExecStart = "${pkgs.consul.bin}/bin/consul agent -config-file=/data/config/consul.json";
       };
     };
   };

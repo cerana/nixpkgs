@@ -18,7 +18,7 @@ in
     systemd.services.ceranaKvProvider = {
       description = "Cerana Kv Provider";
       wantedBy = [ "ceranaLayer2.target" ];
-      wants = [ "ceranaConsul.service" ];
+      requires = [ "ceranaConsul.service" ];
       after = [ "ceranaL2Coordinator.service" "ceranaConsul.service" ];
       serviceConfig = {
         Type = "simple";
