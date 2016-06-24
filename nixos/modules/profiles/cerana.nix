@@ -29,6 +29,9 @@
   systemd.network.enable = true;
   networking.useDHCP = false;
 
+  # don't use NixOS firewall
+  networking.firewall.enable = false;
+
   # For development puroposes only
   services.sshd.enable = true;
 }
