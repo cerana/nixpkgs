@@ -22,6 +22,7 @@
   services.ceranaNodeCoordinator.enable = true;
   services.ceranaL2Coordinator.enable = true;
   targets.ceranaLayer2.enable = true;
+  targets.cerana.enable = true;
   services.ceranaStatsPusher.enable = true;
   services.ceranaSystemdProvider.enable = true;
   services.ceranaZfsProvider.enable = true;

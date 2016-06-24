@@ -3,7 +3,7 @@
 with lib;
 
 let
-  cfg = config.services.ceranaStatsPusher;
+  cfg = config.targets.ceranaLayer2;
 in
 {
   options.targets.ceranaLayer2.enable = mkEnableOption "ceranaLayer2";
