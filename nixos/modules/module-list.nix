@@ -122,6 +122,7 @@
   ./services/backup/sitecopy-backup.nix
   ./services/backup/tarsnap.nix
   ./services/backup/znapzend.nix
+  ./services/cerana/cerana-target.nix
   ./services/cerana/clusterconf-provider.nix
   ./services/cerana/consul.nix
   ./services/cerana/coordinator.nix
@@ -132,10 +133,10 @@
   ./services/cerana/metrics-provider.nix
   ./services/cerana/metrics-provider.nix
   ./services/cerana/network.nix
+  ./services/cerana/pool.nix
   ./services/cerana/statspusher.nix
   ./services/cerana/systemd-provider.nix
   ./services/cerana/zfs-provider.nix
-  ./services/cerana/pool.nix
   ./services/cluster/fleet.nix
   ./services/cluster/kubernetes.nix
   ./services/cluster/panamax.nix
