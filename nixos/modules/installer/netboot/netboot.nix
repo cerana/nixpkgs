@@ -56,8 +56,16 @@ title CeranaOS Rescue Mode
    kernel /bzImage ${toString config.boot.kernelParams} cerana.rescue console=ttyS0
    module /initrd
 
-title CeranaOS Cluster Bootstrap
-   kernel /bzImage ${toString config.boot.kernelParams} cerana.cluster_bootstrap console=ttyS0
+title CeranaOS Cluster Bootstrap (Automatic ZFS, 192.168.10.10/24)
+   kernel /bzImage ${toString config.boot.kernelParams} cerana.cluster_bootstrap cerana.zfs_config=auto cerana.mgmt_ip=192.168.10.10/24 console=ttyS0
+   module /initrd
+
+title CeranaOS Standalone Automatic ZFS
+   kernel /bzImage ${toString config.boot.kernelParams} cerana.zfs_config=auto console=ttyS0
+   module /initrd
+
+title CeranaOS Standalone
+   kernel /bzImage ${toString config.boot.kernelParams} console=ttyS0
    module /initrd
 '';
 
