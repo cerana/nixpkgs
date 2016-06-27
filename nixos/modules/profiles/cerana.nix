@@ -27,6 +27,7 @@
   services.ceranaSystemdProvider.enable = true;
   services.ceranaZfsProvider.enable = true;
 
+  nix.nrBuildUsers = 0;
   systemd.network.enable = true;
   networking.useDHCP = false;
 
