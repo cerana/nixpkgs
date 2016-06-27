@@ -67,6 +67,10 @@ title CeranaOS Standalone Automatic ZFS
 title CeranaOS Standalone
    kernel /bzImage ${toString config.boot.kernelParams} console=ttyS0
    module /initrd
+
+title Boot from first HDD
+   rootnoverify (hd0)
+   chainloader +1
 '';
 
     boot.loader.timeout = 10;
