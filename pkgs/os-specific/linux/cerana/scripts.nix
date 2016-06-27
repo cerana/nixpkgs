@@ -1,4 +1,4 @@
-{ stdenv, cerana, utillinux, coreutils, systemd, gnugrep, gawk, zfs, bash, gptfdisk }:
+{ stdenv, cerana, utillinux, coreutils, systemd, gnugrep, gawk, zfs, bash, gptfdisk, grub2 }:
 
 stdenv.mkDerivation {
   name = "cerana-scripts-${cerana.rev}";
@@ -7,20 +7,22 @@ stdenv.mkDerivation {
 
   installPhase = ''
     make DESTDIR=$out -C $src/boot install
-    substituteInPlace $out/scripts/gen-hostid.sh --replace "uuidgen" "${utillinux}/bin/uuidgen"
+    substituteInPlace $out/bin/fixterm --replace "stty" "${coreutils}/bin/stty"
     substituteInPlace $out/scripts/gen-hostid.sh --replace "tr" "${coreutils}/bin/tr"
-    substituteInPlace $out/scripts/init-zpools.sh --replace "udevadm" "${systemd}/bin/udevadm"
-    substituteInPlace $out/scripts/init-zpools.sh --replace "systemctl" "${systemd}/bin/systemctl"
-    substituteInPlace $out/scripts/init-zpools.sh --replace "grep" "${gnugrep}/bin/grep"
+    substituteInPlace $out/scripts/gen-hostid.sh --replace "uuidgen" "${utillinux}/bin/uuidgen"
     substituteInPlace $out/scripts/init-zpools.sh --replace "awk" "${gawk}/bin/gawk"
-    substituteInPlace $out/scripts/init-zpools.sh --replace "zfs" "${zfs}/bin/zfs"
-    substituteInPlace $out/scripts/init-zpools.sh --replace "zpool" "${zfs}/bin/zpool"
     substituteInPlace $out/scripts/init-zpools.sh --replace "/bin/bash" "${bash}/bin/bash"
+    substituteInPlace $out/scripts/init-zpools.sh --replace "fdisk" "${utillinux}/bin/fdisk"
+    substituteInPlace $out/scripts/init-zpools.sh --replace "grep" "${gnugrep}/bin/grep"
+    substituteInPlace $out/scripts/init-zpools.sh --replace "grub-install" "${grub2}/bin/grub-install"
     substituteInPlace $out/scripts/init-zpools.sh --replace "lsblk" "${utillinux}/bin/lsblk"
     substituteInPlace $out/scripts/init-zpools.sh --replace "sgdisk" "${gptfdisk}/sbin/sgdisk"
-    substituteInPlace $out/scripts/net-init.sh --replace "grep" "${gnugrep}/bin/grep"
+    substituteInPlace $out/scripts/init-zpools.sh --replace "systemctl" "${systemd}/bin/systemctl"
+    substituteInPlace $out/scripts/init-zpools.sh --replace "udevadm" "${systemd}/bin/udevadm"
+    substituteInPlace $out/scripts/init-zpools.sh --replace "zfs" "${zfs}/bin/zfs"
+    substituteInPlace $out/scripts/init-zpools.sh --replace "zpool" "${zfs}/bin/zpool"
     substituteInPlace $out/scripts/net-init.sh --replace "awk" "${gawk}/bin/gawk"
-    substituteInPlace $out/bin/fixterm --replace "stty" "${coreutils}/bin/stty"
+    substituteInPlace $out/scripts/net-init.sh --replace "grep" "${gnugrep}/bin/grep"
   '';
 
   meta = with stdenv.lib; {
