@@ -15,6 +15,7 @@ genisoimage -R -f -b boot/grub/stage2_eltorito \
     -no-emul-boot \
     -boot-load-size 4 \
     -boot-info-table \
+    -V CERANA \
     -o result-iso \
     boot/grub/stage2_eltorito=result-stage2 \
     boot/grub/menu.lst=result/menu.lst \
