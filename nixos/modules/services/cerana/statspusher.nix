@@ -8,7 +8,7 @@ let
   cfgfile = "statspusher.json";
   socketdir = "unix:///task-socket/node-coordinator/coordinator/";
   socket = "node-coord.sock";
-  heartbeatURL = "http://localhost:8085";
+  clusterDataURL = "unix:///task-socket/l2-coordinator/coordinator/l2-coord.sock";
   utility = "${pkgs.cerana.bin}/bin/statspusher";
 in
 {
@@ -31,11 +31,11 @@ in
       preStart = ''
         if [ ! -f ${cfgdir}${cfgfile} ]; then
                 echo "{" > ${cfgdir}${cfgfile}
-                echo '  "bundleTTL": 5,' >> ${cfgdir}${cfgfile}
-                echo '  "datasetTTL": 5,' >> ${cfgdir}${cfgfile}
-                echo '  "nodeTTL": 5,' >> ${cfgdir}${cfgfile}
-                echo '  "coordinatorURL": "${socketdir}${socket}",' >> ${cfgdir}${cfgfile}
-                echo '  "heartbeatURL": "${heartbeatURL}",' >> ${cfgdir}${cfgfile}
+                echo '  "bundleInterval": 5,' >> ${cfgdir}${cfgfile}
+                echo '  "datasetInterval": 5,' >> ${cfgdir}${cfgfile}
+                echo '  "nodeInterval": 5,' >> ${cfgdir}${cfgfile}
+                echo '  "nodeDataURL": "${socketdir}${socket}",' >> ${cfgdir}${cfgfile}
+                echo '  "clusterDataURL": "${clusterDataURL}",' >> ${cfgdir}${cfgfile}
                 echo '  "requestTimeout": 10' >> ${cfgdir}${cfgfile}
                 echo "}" >> ${cfgdir}${cfgfile}
         fi
