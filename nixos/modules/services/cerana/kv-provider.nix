@@ -22,6 +22,7 @@ in
       after = [ "ceranaL2Coordinator.service" "ceranaConsul.service" ];
       serviceConfig = {
         Type = "simple";
+        Restart = "always";
         ExecStart = "${daemon} -c ${cfgdir}${cfgfile}";
       };
       preStart = ''
