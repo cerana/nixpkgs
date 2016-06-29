@@ -52,6 +52,14 @@ min_mem64 1024
 serial
 terminal serial
 
+title CeranaOS Standalone Automatic ZFS
+   kernel /bzImage ${toString config.boot.kernelParams} cerana.zfs_config=auto console=ttyS0
+   module /initrd
+
+title CeranaOS Standalone Pool Prompt
+   kernel /bzImage ${toString config.boot.kernelParams} console=ttyS0
+   module /initrd
+
 title CeranaOS Rescue Mode
    kernel /bzImage ${toString config.boot.kernelParams} cerana.rescue console=ttyS0
    module /initrd
@@ -60,12 +68,12 @@ title CeranaOS Cluster Bootstrap (Automatic ZFS, 192.168.10.10/24)
    kernel /bzImage ${toString config.boot.kernelParams} cerana.cluster_bootstrap cerana.zfs_config=auto cerana.mgmt_ip=192.168.10.10/24 console=ttyS0
    module /initrd
 
-title CeranaOS Standalone Automatic ZFS
-   kernel /bzImage ${toString config.boot.kernelParams} cerana.zfs_config=auto console=ttyS0
+title CeranaOS Cluster Join1 (Automatic ZFS, 192.168.10.11/24)
+   kernel /bzImage ${toString config.boot.kernelParams} cerana.cluster_ips=192.168.10.10 cerana.zfs_config=auto cerana.mgmt_ip=192.168.10.11/24 console=ttyS0
    module /initrd
 
-title CeranaOS Standalone
-   kernel /bzImage ${toString config.boot.kernelParams} console=ttyS0
+title CeranaOS Cluster Join2 (Automatic ZFS, 192.168.10.12/24)
+   kernel /bzImage ${toString config.boot.kernelParams} cerana.cluster_ips=192.168.10.10 cerana.zfs_config=auto cerana.mgmt_ip=192.168.10.12/24 console=ttyS0
    module /initrd
 
 title Boot from first HDD
