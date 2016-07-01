@@ -16,6 +16,7 @@ in
                    "ceranaClusterConfProvider.service"
                    "ceranaConsul.service"
                    "ceranaKvProvider.service"
+                   "ceranaDhcpProvider.service"
                    ];
     };
   };
