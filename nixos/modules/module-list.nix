@@ -134,6 +134,7 @@
   ./services/cerana/metrics-provider.nix
   ./services/cerana/metrics-provider.nix
   ./services/cerana/network.nix
+  ./services/cerana/platform-import.nix
   ./services/cerana/pool.nix
   ./services/cerana/statspusher.nix
   ./services/cerana/systemd-provider.nix
