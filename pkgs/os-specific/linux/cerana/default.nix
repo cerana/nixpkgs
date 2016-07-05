@@ -13,7 +13,7 @@ buildGoPackage rec {
     owner = "cerana";
     repo = "cerana";
     inherit rev;
-    sha256 = "1mdhy7lyrdp80nnhxpq644h66am23xa4ww7689jlf3dcfpdn0vwb";
+    sha256 = "12v62bg541sa1qmiymrhpgq1443wv0r5x0bcciawq1xfdcdg2xfw";
   };
 
   preConfigure = ''
