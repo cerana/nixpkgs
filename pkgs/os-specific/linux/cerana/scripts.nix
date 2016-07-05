@@ -1,4 +1,4 @@
-{ stdenv, cerana, utillinux, coreutils, systemd, gnugrep, gawk, zfs, bash, gptfdisk, grub2 }:
+{ stdenv, cerana, utillinux, coreutils, systemd, gnugrep, gawk, zfs, bash, gptfdisk, grub2, lshw }:
 
 stdenv.mkDerivation {
   name = "cerana-scripts-${cerana.rev}";
@@ -23,6 +23,7 @@ stdenv.mkDerivation {
     substituteInPlace $out/scripts/init-zpools.sh --replace "zpool" "${zfs}/bin/zpool"
     substituteInPlace $out/scripts/net-init.sh --replace "awk" "${gawk}/bin/gawk"
     substituteInPlace $out/scripts/net-init.sh --replace "grep" "${gnugrep}/bin/grep"
+    substituteInPlace $out/scripts/net-init.sh --replace "lshw" "${lshw}/bin/lshw"
   '';
 
   meta = with stdenv.lib; {
