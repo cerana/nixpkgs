@@ -11,7 +11,7 @@ in
   config = mkIf cfg.enable {
     systemd.services.cerananet = {
       description = "Cerana Network Configuration";
-      path = [ pkgs.cerana-scripts ];
+      path = [ pkgs.cerana-scripts pkgs.gawk pkgs.gnugrep pkgs.lshw];
       requires = [ "ceranapool.service" ];
       requiredBy = [ "systemd-networkd.service" ];
       before = [ "systemd-networkd.service" "sshd.service" "ntpd.service" ];
