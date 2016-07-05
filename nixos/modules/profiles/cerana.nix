@@ -12,21 +12,22 @@
 
   security.apparmor.enable = false;
 
-  services.ceranapool.enable = true;
-  services.cerananet.enable = true;
   services.ceranaClusterConfProvider.enable = true;
   services.ceranaConsul.enable = true;
+  services.ceranaDhcpProvider.enable = true;
   services.ceranaHealthProvider.enable = true;
   services.ceranaKvProvider.enable = true;
-  services.ceranaMetricsProvider.enable = true;
-  services.ceranaNodeCoordinator.enable = true;
   services.ceranaL2Coordinator.enable = true;
-  targets.ceranaLayer2.enable = true;
-  targets.cerana.enable = true;
+  services.ceranaMetricsProvider.enable = true;
+  services.cerananet.enable = true;
+  services.ceranaNodeCoordinator.enable = true;
+  services.ceranaPlatformImport.enable = true;
+  services.ceranapool.enable = true;
   services.ceranaStatsPusher.enable = true;
   services.ceranaSystemdProvider.enable = true;
   services.ceranaZfsProvider.enable = true;
-  services.ceranaDhcpProvider.enable = true;
+  targets.cerana.enable = true;
+  targets.ceranaLayer2.enable = true;
 
   nix.nrBuildUsers = 0;
   systemd.network.enable = true;
