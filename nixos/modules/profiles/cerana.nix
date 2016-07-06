@@ -19,6 +19,7 @@
   services.ceranaKvProvider.enable = true;
   services.ceranaL2Coordinator.enable = true;
   services.ceranaMetricsProvider.enable = true;
+  services.ceranaNamespaceProvider.enable = true;
   services.cerananet.enable = true;
   services.ceranaNodeCoordinator.enable = true;
   services.ceranaPlatformImport.enable = true;
