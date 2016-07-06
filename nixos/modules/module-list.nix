@@ -131,7 +131,7 @@
   ./services/cerana/l2-coordinator.nix
   ./services/cerana/l2-services.nix
   ./services/cerana/metrics-provider.nix
-  ./services/cerana/metrics-provider.nix
+  ./services/cerana/namespace-provider.nix
   ./services/cerana/network.nix
   ./services/cerana/platform-import.nix
   ./services/cerana/pool.nix
