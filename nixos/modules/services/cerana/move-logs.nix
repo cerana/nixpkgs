@@ -5,7 +5,7 @@ with lib;
 let
   cfg = config.services.ceranaMoveLogs;
   srcdir = "/var";
-  destdir = "/data";
+  destdir = "/data/logs";
   logfiledir = "log";
   rotatemask = "3";
 in
