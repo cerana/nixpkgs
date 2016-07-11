@@ -25,6 +25,7 @@
   services.ceranaPlatformImport.enable = true;
   services.ceranapool.enable = true;
   services.ceranaMoveLogs.enable = true;
+  services.ceranaServiceProvider.enable = true;
   services.ceranaStatsPusher.enable = true;
   services.ceranaSystemdProvider.enable = true;
   services.ceranaZfsProvider.enable = true;
