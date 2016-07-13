@@ -121,6 +121,7 @@
   ./services/backup/sitecopy-backup.nix
   ./services/backup/tarsnap.nix
   ./services/backup/znapzend.nix
+  ./services/cerana/bootserver.nix
   ./services/cerana/cerana-target.nix
   ./services/cerana/clusterconf-provider.nix
   ./services/cerana/consul.nix
