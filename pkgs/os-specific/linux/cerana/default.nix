@@ -1,4 +1,4 @@
-{ stdenv, lib, buildGoPackage, git, glide, ipxe, libseccomp, pkgconfig, fetchFromGitHub }:
+{ stdenv, lib, buildGoPackage, git, glide, libseccomp, pkgconfig, fetchFromGitHub }:
 
 buildGoPackage rec {
   name = "cerana-${version}";
