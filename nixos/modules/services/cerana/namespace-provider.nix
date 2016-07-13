@@ -4,7 +4,7 @@ with lib;
 
 let
   cfg = config.services.ceranaNamespaceProvider;
-  name = "systemd-provider";
+  name = "namespace-provider";
   cfgdir = "/data/config/";
   cfgfile = "namespace-provider.json";
   socketdir = "/task-socket/node-coordinator/";
