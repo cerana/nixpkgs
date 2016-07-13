@@ -64,16 +64,16 @@ title CeranaOS Rescue Mode
    kernel /bzImage ${toString config.boot.kernelParams} cerana.rescue console=ttyS0
    module /initrd
 
-title CeranaOS Cluster Bootstrap (Automatic ZFS, 192.168.10.10/24)
-   kernel /bzImage ${toString config.boot.kernelParams} cerana.cluster_bootstrap cerana.zfs_config=auto cerana.mgmt_ip=192.168.10.10/24 console=ttyS0
+title CeranaOS Cluster Bootstrap (Automatic ZFS, 172.16.10.1/24)
+   kernel /bzImage ${toString config.boot.kernelParams} cerana.cluster_bootstrap cerana.zfs_config=auto cerana.mgmt_ip=172.16.10.1/24 console=ttyS0
    module /initrd
 
-title CeranaOS Cluster Join1 (Automatic ZFS, 192.168.10.11/24)
-   kernel /bzImage ${toString config.boot.kernelParams} cerana.cluster_ips=192.168.10.10 cerana.zfs_config=auto cerana.mgmt_ip=192.168.10.11/24 console=ttyS0
+title CeranaOS Cluster Join1 (Automatic ZFS, 172.16.10.2/24)
+   kernel /bzImage ${toString config.boot.kernelParams} cerana.cluster_ips=172.16.10.1 cerana.zfs_config=auto cerana.mgmt_ip=172.16.10.2/24 console=ttyS0
    module /initrd
 
-title CeranaOS Cluster Join2 (Automatic ZFS, 192.168.10.12/24)
-   kernel /bzImage ${toString config.boot.kernelParams} cerana.cluster_ips=192.168.10.10 cerana.zfs_config=auto cerana.mgmt_ip=192.168.10.12/24 console=ttyS0
+title CeranaOS Cluster Join2 (Automatic ZFS, 172.16.10.3/24)
+   kernel /bzImage ${toString config.boot.kernelParams} cerana.cluster_ips=172.16.10.1 cerana.zfs_config=auto cerana.mgmt_ip=172.16.10.3/24 console=ttyS0
    module /initrd
 
 title Boot from first HDD
