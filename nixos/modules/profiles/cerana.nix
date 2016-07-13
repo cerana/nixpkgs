@@ -12,6 +12,7 @@
 
   security.apparmor.enable = false;
 
+  services.ceranaBootserver.enable = true;
   services.ceranaClusterConfProvider.enable = true;
   services.ceranaConsul.enable = true;
   services.ceranaDhcpProvider.enable = true;
