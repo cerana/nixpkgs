@@ -10,6 +10,8 @@ stdenv.mkDerivation {
 
   buildInputs = [ perl cdrkit syslinux ];
 
+  patches = [ ./ipxe-serial.patch ];
+
   src = fetchgit {
     url = git://git.ipxe.org/ipxe.git;
     sha256 = "0wiy3kag6x8a2a71pc9za9izmac8gdz90vaqp2mwgih6p2lz01zq";
