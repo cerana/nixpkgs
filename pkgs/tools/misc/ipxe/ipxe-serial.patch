@@ -1,0 +1,13 @@
+--- a/src/config/console.h	1970-01-01 00:00:01.000000000 +0000
++++ b/src/config/console.h	2016-07-14 13:46:55.993347064 +0000
+@@ -14,8 +14,8 @@
+ 
+ #include <config/defaults.h>
+ 
+-//#define	CONSOLE_PCBIOS		/* Default BIOS console */
+-//#define	CONSOLE_SERIAL		/* Serial port */
++#define	CONSOLE_PCBIOS		/* Default BIOS console */
++#define	CONSOLE_SERIAL		/* Serial port */
+ //#define	CONSOLE_DIRECT_VGA	/* Direct access to VGA card */
+ //#define	CONSOLE_PC_KBD		/* Direct access to PC keyboard */
+ //#define	CONSOLE_SYSLOG		/* Syslog console */
