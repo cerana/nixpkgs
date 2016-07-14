@@ -31,7 +31,7 @@ in
                 echo '  "socket_dir": "${socketdir}",' >> ${cfgdir}${cfgfile}
                 echo '  "coordinator_url": "unix://${socketdir}${socket}",' >> ${cfgdir}${cfgfile}
                 echo '  "dhcp_interface": "mgmt0",' >> ${cfgdir}${cfgfile}
-                echo '  "ipxe": "/tmp/undionly.kpxe",' >> ${cfgdir}${cfgfile}
+                echo '  "ipxe": "${pkgs.ipxe}/undionly.kpxe",' >> ${cfgdir}${cfgfile}
                 # Can use symlinks for these which may help with updates.
                 # Actually, "current" is a symlink.
                 echo '  "initrd": "/data/platform/current/initrd",' >> ${cfgdir}${cfgfile}

@@ -10,6 +10,9 @@ let
   socketdir = "/task-socket/l2-coordinator/";
   socket = "coordinator/l2-coord.sock";
   daemon = "${pkgs.cerana.bin}/bin/dhcp-provider";
+  net = "172.16.10.1/24";
+  gw = "172.16.10.1";
+  dns = "172.16.10.1";
 in
 {
   options.services.ceranaDhcpProvider.enable = mkEnableOption "ceranaDhcpProvider";
@@ -31,6 +34,7 @@ in
                 echo "{" > ${cfgdir}${cfgfile}
                 echo '  "service_name": "${name}",' >> ${cfgdir}${cfgfile}
                 echo '  "socket_dir": "${socketdir}",' >> ${cfgdir}${cfgfile}
+                echo "  \"network\": \"$net\"," >> ${cfgdir}${cfgfile}
                 echo "  \"dns_servers\": \"$dns\"," >> ${cfgdir}${cfgfile}
                 echo "  \"gateway\": \"$gw\"," >> ${cfgdir}${cfgfile}
                 echo '  "coordinator_url": "unix://${socketdir}${socket}"' >> ${cfgdir}${cfgfile}
