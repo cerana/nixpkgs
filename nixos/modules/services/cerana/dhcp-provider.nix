@@ -34,9 +34,9 @@ in
                 echo "{" > ${cfgdir}${cfgfile}
                 echo '  "service_name": "${name}",' >> ${cfgdir}${cfgfile}
                 echo '  "socket_dir": "${socketdir}",' >> ${cfgdir}${cfgfile}
-                echo "  \"network\": \"$net\"," >> ${cfgdir}${cfgfile}
-                echo "  \"dns_servers\": \"$dns\"," >> ${cfgdir}${cfgfile}
-                echo "  \"gateway\": \"$gw\"," >> ${cfgdir}${cfgfile}
+                echo '  "network": "${net}",' >> ${cfgdir}${cfgfile}
+                echo '  "dns_servers": "${dns}",' >> ${cfgdir}${cfgfile}
+                echo '  "gateway": "${gw}",' >> ${cfgdir}${cfgfile}
                 echo '  "coordinator_url": "unix://${socketdir}${socket}"' >> ${cfgdir}${cfgfile}
                 echo "}" >> ${cfgdir}${cfgfile}
         fi
