@@ -18,7 +18,7 @@ in
     systemd.services.ceranaBootserver = {
       description = "Cerana PXE Boot Server";
       wantedBy = [ "ceranaLayer2.target" ];
-      after = [ "ceranaL2Coordinator.service" ];
+      after = [ "ceranaL2Coordinator.service" "ceranaDhcpProvider.service" ];
       serviceConfig = {
         Type = "simple";
         Restart = "always";
