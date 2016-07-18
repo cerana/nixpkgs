@@ -9,6 +9,7 @@ let
   socketdir = "unix:///task-socket/node-coordinator/coordinator/";
   socket = "node-coord.sock";
   clusterDataURL = "unix:///task-socket/l2-coordinator/coordinator/l2-coord.sock";
+  datasetDir = "/data/datasets/";
   utility = "${pkgs.cerana.bin}/bin/statspusher";
 in
 {
@@ -33,6 +34,7 @@ in
                 echo "{" > ${cfgdir}${cfgfile}
                 echo '  "bundleInterval": 5,' >> ${cfgdir}${cfgfile}
                 echo '  "datasetInterval": 5,' >> ${cfgdir}${cfgfile}
+                echo '  "datasetDir": "${datasetDir}",' >> ${cfgdir}${cfgfile}
                 echo '  "nodeInterval": 5,' >> ${cfgdir}${cfgfile}
                 echo '  "nodeDataURL": "${socketdir}${socket}",' >> ${cfgdir}${cfgfile}
                 echo '  "clusterDataURL": "${clusterDataURL}",' >> ${cfgdir}${cfgfile}
