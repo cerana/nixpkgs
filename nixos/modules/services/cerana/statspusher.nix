@@ -19,15 +19,17 @@ in
     systemd.services.ceranaStatsPusher = {
       description = "Cerana Statistics Pusher";
       wantedBy = [ "ceranaLayer2.target" ];
-      wants = [ "ceranaL2Coordinator.service"
+      after = [ "ceranaL2Coordinator.service"
                 "ceranaClusterConfProvider.service"
                 "ceranaMetricsProvider.service"
                 "ceranaSystemdProvider.service"
-                "ceranaZfsProvider.service" ];
-      after = [ "ceranaL2Coordinator.service" ];
+                "ceranaZfsProvider.service"
+                "systemd-networkd.service" ];
       serviceConfig = {
         Type = "simple";
         ExecStart = "${utility} -c ${cfgdir}${cfgfile}";
+        Restart = "always";
+        RestartSec = "1";
       };
       preStart = ''
         if [ ! -f ${cfgdir}${cfgfile} ]; then
@@ -38,7 +40,7 @@ in
                 echo '  "nodeInterval": 5,' >> ${cfgdir}${cfgfile}
                 echo '  "nodeDataURL": "${socketdir}${socket}",' >> ${cfgdir}${cfgfile}
                 echo '  "clusterDataURL": "${clusterDataURL}",' >> ${cfgdir}${cfgfile}
-                echo '  "requestTimeout": 10' >> ${cfgdir}${cfgfile}
+                echo '  "requestTimeout": "10s"' >> ${cfgdir}${cfgfile}
                 echo "}" >> ${cfgdir}${cfgfile}
         fi
         '';
