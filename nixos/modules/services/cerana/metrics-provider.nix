@@ -17,6 +17,7 @@ in
   config = mkIf cfg.enable {
     systemd.services.ceranaMetricsProvider = {
       description = "Cerana Metrics Provider";
+      path = [ pkgs.lshw ];
       wantedBy = [ "multi-user.target" ];
       wants = [ "ceranaNodeCoordinator.service" ];
       after = [ "ceranaNodeCoordinator.service" ];
