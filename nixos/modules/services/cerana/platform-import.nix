@@ -11,7 +11,7 @@ in
   config = mkIf cfg.enable {
     systemd.services.ceranaPlatformImport = {
       description = "Cerana Platform Import";
-      path = [ pkgs.cerana-scripts pkgs.rsync pkgs.utillinux ];
+      path = [ pkgs.cerana-scripts pkgs.rsync pkgs.utillinux pkgs.coreutils pkgs.curl ];
       wantedBy = [ "multi-user.target" ];
       after = [ "ceranapool.service" "systemd-networkd.service" ];
       serviceConfig = {
