@@ -18,13 +18,15 @@ in
     systemd.services.ceranaBootserver = {
       description = "Cerana PXE Boot Server";
       wantedBy = [ "ceranaLayer2.target" ];
-      after = [ "ceranaL2Coordinator.service" "ceranaDhcpProvider.service" ];
+      after = [ "ceranaL2Coordinator.service" "ceranaDhcpProvider.service" "systemd-networkd.service" "ceranaPlatformImport.service" ];
       serviceConfig = {
         Type = "simple";
         Restart = "always";
-        ExecStart = "${daemon} -c ${cfgdir}${cfgfile}";
+        RestartSec = "1";
+        ExecStart = "${daemon} -c ${cfgdir}${cfgfile} --log_level=info";
       };
       preStart = ''
+        rm -f ${socketdir}response/${name}.sock
         if [ ! -f ${cfgdir}${cfgfile} ]; then
                 echo "{" > ${cfgdir}${cfgfile}
                 echo '  "service_name": "${name}",' >> ${cfgdir}${cfgfile}

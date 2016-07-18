@@ -18,7 +18,7 @@ with lib;
 
     # !!! Hack - attributes expected by other modules.
     system.boot.loader.kernelFile = "bzImage";
-    environment.systemPackages = [ pkgs.grub2 pkgs.libselinux pkgs.qemu_kvm pkgs.strace pkgs.gdb pkgs.lshw pkgs.consul.bin pkgs.cerana.bin pkgs.cerana-scripts pkgs.dhcpcd pkgs.gptfdisk pkgs.glide pkgs.go_1_6 pkgs.git pkgs.vim pkgs.patchelf ];
+    environment.systemPackages = [ pkgs.grub2 pkgs.libselinux pkgs.qemu_kvm pkgs.strace pkgs.gdb pkgs.lshw pkgs.consul.bin pkgs.cerana.bin pkgs.cerana-scripts pkgs.dhcpcd pkgs.gptfdisk pkgs.git pkgs.vim pkgs.patchelf ];
 
     fileSystems."/" =
       { fsType = "tmpfs";
@@ -64,17 +64,12 @@ title CeranaOS Rescue Mode
    kernel /bzImage ${toString config.boot.kernelParams} cerana.rescue console=ttyS0
    module /initrd
 
-title CeranaOS Cluster Bootstrap (Automatic ZFS, 172.16.10.1/24)
-   kernel /bzImage ${toString config.boot.kernelParams} cerana.cluster_bootstrap cerana.zfs_config=auto cerana.mgmt_ip=172.16.10.1/24 console=ttyS0
+title CeranaOS Cluster Bootstrap (Automatic ZFS, 172.16.10.2/24)
+   kernel /bzImage ${toString config.boot.kernelParams} cerana.cluster_bootstrap cerana.zfs_config=auto cerana.mgmt_ip=172.16.10.2/24 console=ttyS0
    module /initrd
 
-title CeranaOS Cluster Join1 (Automatic ZFS, 172.16.10.2/24)
-   kernel /bzImage ${toString config.boot.kernelParams} cerana.cluster_ips=172.16.10.1 cerana.zfs_config=auto cerana.mgmt_ip=172.16.10.2/24 console=ttyS0
-   module /initrd
-
-title CeranaOS Cluster Join2 (Automatic ZFS, 172.16.10.3/24)
-   kernel /bzImage ${toString config.boot.kernelParams} cerana.cluster_ips=172.16.10.1 cerana.zfs_config=auto cerana.mgmt_ip=172.16.10.3/24 console=ttyS0
-   module /initrd
+title CeranaOS Cluster Join (iPXE)
+   kernel /ipxe.lkrn
 
 title Boot from first HDD
    rootnoverify (hd0)
