@@ -64,8 +64,8 @@ title CeranaOS Rescue Mode
    kernel /bzImage ${toString config.boot.kernelParams} cerana.rescue console=ttyS0
    module /initrd
 
-title CeranaOS Cluster Bootstrap (Automatic ZFS, 172.16.10.2/24)
-   kernel /bzImage ${toString config.boot.kernelParams} cerana.cluster_bootstrap cerana.zfs_config=auto cerana.mgmt_ip=172.16.10.2/24 console=ttyS0
+title CeranaOS Cluster Bootstrap (Automatic ZFS, 172.16.10.2/16)
+   kernel /bzImage ${toString config.boot.kernelParams} cerana.cluster_bootstrap cerana.zfs_config=auto cerana.mgmt_ip=172.16.10.2/16 console=ttyS0
    module /initrd
 
 title CeranaOS Cluster Join (iPXE)
