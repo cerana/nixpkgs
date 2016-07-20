@@ -10,9 +10,9 @@ let
   socketdir = "/task-socket/l2-coordinator/";
   socket = "coordinator/l2-coord.sock";
   daemon = "${pkgs.cerana.bin}/bin/dhcp-provider";
-  net = "172.16.10.1/24";
-  gw = "172.16.10.1";
-  dns = "172.16.10.1";
+  net = "172.16.0.0/16";
+  gw = "172.16.255.255";
+  dns = "172.16.255.255";
 in
 {
   options.services.ceranaDhcpProvider.enable = mkEnableOption "ceranaDhcpProvider";
