@@ -126,6 +126,7 @@
   ./services/cerana/clusterconf-provider.nix
   ./services/cerana/consul.nix
   ./services/cerana/coordinator.nix
+  ./services/cerana/datatrade-provider.nix
   ./services/cerana/dhcp-provider.nix
   ./services/cerana/health-provider.nix
   ./services/cerana/kv-provider.nix

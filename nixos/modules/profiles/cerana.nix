@@ -15,6 +15,7 @@
   services.ceranaBootserver.enable = true;
   services.ceranaClusterConfProvider.enable = true;
   services.ceranaConsul.enable = true;
+  services.ceranaDataTradeProvider.enable = true;
   services.ceranaDhcpProvider.enable = true;
   services.ceranaHealthProvider.enable = true;
   services.ceranaKvProvider.enable = true;
