@@ -18,6 +18,7 @@ in
                    "ceranaKvProvider.service"
                    "ceranaDhcpProvider.service"
                    "ceranaBootserver.service"
+                   "ceranaDataTradeProvider.service"
                    ];
     };
   };
