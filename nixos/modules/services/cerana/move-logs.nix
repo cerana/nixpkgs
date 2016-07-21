@@ -20,10 +20,11 @@ in
       after = [ "ceranapool.service" ];
       serviceConfig = {
         Type = "oneshot";
-        ExecStart = "${pkgs.systemd}/bin/systemctl start systemd-journald.service";
+        ExecStart = "${pkgs.systemd}/bin/systemctl restart systemd-journald.service";
       };
       preStart = ''
-        ${pkgs.systemd}/bin/systemctl stop systemd-journald.service
+        # get systemd-journald to fail
+        while pkill systemd-journald; do cat /dev/null; done;
         logdir=${destdir}/${logfiledir}
         bootcountfile=$logdir/boots
         if [ -f $bootcountfile ]; then
@@ -39,8 +40,7 @@ in
                 n=0
         fi
         mkdir -p $logdir
-        cp -r ${srcdir}/${logfiledir} ${destdir}
-        mv ${srcdir}/${logfiledir} ${srcdir}/${logfiledir}.boot
+        mv ${srcdir}/${logfiledir} ${destdir}
         ln -s ${destdir}/${logfiledir} ${srcdir}/${logfiledir}
         echo $n >$bootcountfile
         exit 0

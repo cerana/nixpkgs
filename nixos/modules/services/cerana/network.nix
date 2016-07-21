@@ -15,7 +15,7 @@ in
       requires = [ "ceranapool.service" ];
       requiredBy = [ "systemd-networkd.service" ];
       before = [ "systemd-networkd.service" "sshd.service" "ntpd.service" ];
-      after = [ "ceranapool.service" ];
+      after = [ "ceranapool.service" "ceranaMoveLogs.service" ];
       serviceConfig = {
         Type = "oneshot";
         ExecStart = "${pkgs.cerana-scripts}/scripts/net-init.sh";
