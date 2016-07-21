@@ -30,14 +30,15 @@ in
         ExecStart = "${utility} -c ${cfgdir}${cfgfile}";
         Restart = "always";
         RestartSec = "1";
+        TimeoutStopSec = "15";
       };
       preStart = ''
         if [ ! -f ${cfgdir}${cfgfile} ]; then
                 echo "{" > ${cfgdir}${cfgfile}
-                echo '  "bundleInterval": 5,' >> ${cfgdir}${cfgfile}
-                echo '  "datasetInterval": 5,' >> ${cfgdir}${cfgfile}
+                echo '  "bundleInterval": "5s",' >> ${cfgdir}${cfgfile}
+                echo '  "datasetInterval": "5s",' >> ${cfgdir}${cfgfile}
                 echo '  "datasetDir": "${datasetDir}",' >> ${cfgdir}${cfgfile}
-                echo '  "nodeInterval": 5,' >> ${cfgdir}${cfgfile}
+                echo '  "nodeInterval": "5s",' >> ${cfgdir}${cfgfile}
                 echo '  "nodeDataURL": "${socketdir}${socket}",' >> ${cfgdir}${cfgfile}
                 echo '  "clusterDataURL": "${clusterDataURL}",' >> ${cfgdir}${cfgfile}
                 echo '  "requestTimeout": "10s"' >> ${cfgdir}${cfgfile}
