@@ -9,6 +9,8 @@ let
   cfgfile = "service-provider.json";
   socketdir = "/task-socket/node-coordinator/";
   socket = "coordinator/node-coord.sock";
+  rollbackCloneCmd = "/run/current-system/sw/bin/rollback_clone";
+  datasetCloneDir = "data/running-clones";
   daemon = "${pkgs.cerana.bin}/bin/service-provider";
 in
 {
@@ -30,7 +32,9 @@ in
                 echo '  "service_name": "${name}",' >> ${cfgdir}${cfgfile}
                 echo '  "socket_dir": "${socketdir}",' >> ${cfgdir}${cfgfile}
                 echo '  "coordinator_url": "unix://${socketdir}${socket}",' >> ${cfgdir}${cfgfile}
-                echo '  "request_timeout": 5' >> ${cfgdir}${cfgfile}
+                echo '  "request_timeout": 5,' >> ${cfgdir}${cfgfile}
+                echo '  "rollback_clone_cmd": "${rollbackCloneCmd}",' >> ${cfgdir}${cfgfile}
+                echo '  "dataset_clone_dir": "${datasetCloneDir}"' >> ${cfgdir}${cfgfile}
                 echo "}" >> ${cfgdir}${cfgfile}
         fi
         '';
