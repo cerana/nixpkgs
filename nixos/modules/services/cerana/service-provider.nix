@@ -25,11 +25,15 @@ in
       serviceConfig = {
         Type = "simple";
         ExecStart = "${daemon} -c ${cfgdir}${cfgfile}";
+        Restart = "always";
+        RestartSec = "1";
       };
       preStart = ''
+        find ${socketdir} -iname \*${name}.sock -delete
         if [ ! -f ${cfgdir}${cfgfile} ]; then
                 echo "{" > ${cfgdir}${cfgfile}
                 echo '  "service_name": "${name}",' >> ${cfgdir}${cfgfile}
+                echo '  "log_level": "debug",' >> ${cfgdir}${cfgfile}
                 echo '  "socket_dir": "${socketdir}",' >> ${cfgdir}${cfgfile}
                 echo '  "coordinator_url": "unix://${socketdir}${socket}",' >> ${cfgdir}${cfgfile}
                 echo '  "request_timeout": 5,' >> ${cfgdir}${cfgfile}
