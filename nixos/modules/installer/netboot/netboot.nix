@@ -18,7 +18,7 @@ with lib;
 
     # !!! Hack - attributes expected by other modules.
     system.boot.loader.kernelFile = "bzImage";
-    environment.systemPackages = [ pkgs.grub2 pkgs.libselinux pkgs.qemu_kvm pkgs.strace pkgs.gdb pkgs.lshw pkgs.consul.bin pkgs.cerana.bin pkgs.cerana-scripts pkgs.dhcpcd pkgs.gptfdisk pkgs.git pkgs.vim pkgs.patchelf ];
+    environment.systemPackages = [ pkgs.grub2 pkgs.libselinux pkgs.qemu_kvm pkgs.strace pkgs.gdb pkgs.lshw pkgs.consul.bin pkgs.cerana.bin pkgs.cerana-scripts pkgs.dhcpcd pkgs.gptfdisk pkgs.git pkgs.vim pkgs.patchelf pkgs.screen pkgs.jq ];
 
     fileSystems."/" =
       { fsType = "tmpfs";
@@ -80,6 +80,8 @@ title Boot from first HDD
 
     boot.postBootCommands =
       ''
+        ${pkgs.procps}/bin/sysctl -w net.core.rmem_max=8388608
+        ${pkgs.procps}/bin/sysctl -w net.core.wmem_max=8388608
         ${pkgs.coreutils}/bin/rm /etc/hostid
         ${pkgs.coreutils}/bin/mkdir -p /task-socket/node-coordinator/
         ${pkgs.cerana-scripts}/scripts/parse-cmdline.sh
