@@ -9,7 +9,7 @@ let
   socketdir = "unix:///task-socket/node-coordinator/coordinator/";
   socket = "node-coord.sock";
   clusterDataURL = "unix:///task-socket/l2-coordinator/coordinator/l2-coord.sock";
-  datasetDir = "/data/datasets/";
+  datasetDir = "data/datasets";
   utility = "${pkgs.cerana.bin}/bin/statspusher";
 in
 {
