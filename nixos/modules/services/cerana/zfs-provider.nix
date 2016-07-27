@@ -17,6 +17,7 @@ in
   config = mkIf cfg.enable {
     systemd.services.ceranaZfsProvider = {
       description = "Cerana ZFS Provider";
+      path = [ pkgs.zfs ];
       wantedBy = [ "multi-user.target" ];
       wants = [ "ceranaNodeCoordinator.service" ];
       after = [ "ceranaNodeCoordinator.service" ];
