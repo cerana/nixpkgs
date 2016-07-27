@@ -9,7 +9,7 @@ let
   cfgfile = "datatrade-provider.json";
   socketdir = "/task-socket/l2-coordinator/";
   socket = "coordinator/l2-coord.sock";
-  coord_port = "8085";
+  coord_port = "8080";
   daemon = "${pkgs.cerana.bin}/bin/datatrade-provider";
 in
 {
@@ -34,7 +34,7 @@ in
                 echo '  "socket_dir": "${socketdir}",' >> ${cfgdir}${cfgfile}
                 echo '  "coordinator_url": "unix://${socketdir}${socket}",' >> ${cfgdir}${cfgfile}
                 echo '  "node_coordinator_port": ${coord_port},' >> ${cfgdir}${cfgfile}
-                echo '  "dataset_dir": "/data/datasets"' >> ${cfgdir}${cfgfile}
+                echo '  "dataset_dir": "data/datasets"' >> ${cfgdir}${cfgfile}
                 echo "}" >> ${cfgdir}${cfgfile}
         fi
         '';
