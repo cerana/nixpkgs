@@ -22,7 +22,7 @@ in
       serviceConfig = {
         Type = "simple";
         Restart = "always";
-        RestartSec = "1";
+        RestartSec = "3";
         ExecStart = "${daemon} -c ${cfgdir}${cfgfile} --log_level=info";
       };
       preStart = ''

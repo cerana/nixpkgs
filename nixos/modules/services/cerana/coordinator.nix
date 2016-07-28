@@ -21,6 +21,8 @@ in
       serviceConfig = {
         Type = "simple";
         ExecStart = "${daemon} -c ${cfgdir}${cfgfile}";
+        Restart = "always";
+        RestartSec = "3";
       };
       preStart = ''
         ${pkgs.coreutils}/bin/mkdir -p ${socketdir}

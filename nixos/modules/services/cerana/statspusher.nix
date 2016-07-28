@@ -29,7 +29,7 @@ in
         Type = "simple";
         ExecStart = "${utility} -c ${cfgdir}${cfgfile}";
         Restart = "always";
-        RestartSec = "1";
+        RestartSec = "3";
         TimeoutStopSec = "15";
       };
       preStart = ''

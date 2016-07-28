@@ -26,7 +26,7 @@ in
         Type = "simple";
         ExecStart = "${daemon} -c ${cfgdir}${cfgfile}";
         Restart = "always";
-        RestartSec = "1";
+        RestartSec = "3";
       };
       preStart = ''
         find ${socketdir} -iname \*${name}.sock -delete
