@@ -18,6 +18,8 @@ in
         KillMode = "process";
         KillSignal = "SIGINT";
         ExecStart = "${pkgs.consul.bin}/bin/consul agent -config-file=/data/config/consul.json";
+        Restart = "always";
+        RestartSec = "3";
       };
     };
   };
