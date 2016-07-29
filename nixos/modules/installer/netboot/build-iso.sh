@@ -1,8 +1,5 @@
-#!/usr/bin/env bash
-
-# use binaries from Nix, not from host system
-PACKAGES="grub bash multipath-tools coreutils utillinux cdrkit ipxe"
-[[ -z $IN_THE_SHELL ]] && IN_THE_SHELL=1 exec $(which nix-shell) --run $0 -p ${PACKAGES} -I nixpkgs=./
+#!/usr/bin/env nix-shell
+#!nix-shell -i bash --pure -I nixpkgs=./ -p grub bash multipath-tools coreutils utillinux cdrkit ipxe
 
 # obtain grub stage 2
 GRUB=$(echo $nativeBuildInputs | sed 's| |\n|g' | grep grub)
