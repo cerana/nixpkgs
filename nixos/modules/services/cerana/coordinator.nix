@@ -30,6 +30,7 @@ in
         if [ ! -f ${cfgdir}${cfgfile} ]; then
                 echo "{" > ${cfgdir}${cfgfile}
                 echo '  "service_name": "${name}",' >> ${cfgdir}${cfgfile}
+                echo '  "log_level": "debug",' >> ${cfgdir}${cfgfile}
                 echo '  "request_timeout": 60,' >> ${cfgdir}${cfgfile}
                 echo '  "socket_dir": "${socketdir}"' >> ${cfgdir}${cfgfile}
                 echo "}" >> ${cfgdir}${cfgfile}

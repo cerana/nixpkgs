@@ -32,6 +32,7 @@ in
                 echo "{" > ${cfgdir}${cfgfile}
                 echo '  "service_name": "${name}",' >> ${cfgdir}${cfgfile}
                 echo '  "socket_dir": "${socketdir}",' >> ${cfgdir}${cfgfile}
+                echo '  "log_level": "debug",' >> ${cfgdir}${cfgfile}
                 echo '  "coordinator_url": "unix://${socketdir}${socket}"' >> ${cfgdir}${cfgfile}
                 echo "}" >> ${cfgdir}${cfgfile}
         fi

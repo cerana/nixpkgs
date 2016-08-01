@@ -32,6 +32,7 @@ in
                 gw=`${pkgs.nettools}/bin/route -n | grep UG | tr -s ' ' | cut -d ' ' -f 2`
                 echo "{" > ${cfgdir}${cfgfile}
                 echo '  "service_name": "${name}",' >> ${cfgdir}${cfgfile}
+                echo '  "log_level": "debug",' >> ${cfgdir}${cfgfile}
                 echo '  "socket_dir": "${socketdir}",' >> ${cfgdir}${cfgfile}
                 echo '  "coordinator_url": "unix://${socketdir}${socket}",' >> ${cfgdir}${cfgfile}
                 echo '  "node_coordinator_port": ${coord_port},' >> ${cfgdir}${cfgfile}
