@@ -7,12 +7,14 @@ set -o errexit
 HERE=$(cd $(dirname $0); pwd)
 
 if [[ -n ${1} ]]; then
-    HEAD=${1}
+    HEAD=heads/${1}
 else
-    HEAD=master
+    HEAD=heads/master
 fi
+# allow sepcifying e.g. tags/demo-0.0.1
+HEAD=${HEAD/heads\/tags/tags}
 
-REV=$(curl --cacert /etc/ssl/certs/ca-certificates.crt https://api.github.com/repos/cerana/cerana/git/refs/heads/${HEAD} | jq -r .object.sha)
+REV=$(curl --cacert /etc/ssl/certs/ca-certificates.crt https://api.github.com/repos/cerana/cerana/git/refs/${HEAD} | jq -r .object.sha)
 
 sed -e "/rev/{s|\"[^\"]*\"|\"${REV}\"|}" -i ${HERE}/default.nix
 sed -e "/sha256/{s|\"..........|\"1111111111|}" -i ${HERE}/default.nix
