@@ -95,6 +95,9 @@ stdenv.mkDerivation rec {
 
     # Fix pkgconfig.
     ln -s ../share/pkgconfig $out/lib/pkgconfig
+
+    # remove tests, they link against gcc directly
+    rm -rf $out/share/zfs/zfs-tests
   '';
 
   meta = {

@@ -20,7 +20,8 @@ stdenv.mkDerivation rec {
       ++ stdenv.lib.optional (cyrus_sasl == null) "--without-cyrus-sasl"
       ++ stdenv.lib.optional stdenv.isFreeBSD "--with-pic";
 
-  dontPatchELF = 1; # !!!
+# Commented by Nahum because it creates a dependency on GCC
+#  dontPatchELF = 1; # !!!
 
   # Fixup broken libtool
   preFixup = ''
