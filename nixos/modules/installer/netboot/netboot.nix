@@ -88,6 +88,8 @@ set color_highlight=black/white
 set default=0
 set timeout=10
 
+search --set=root --label CERANA
+
 menuentry "CeranaOS Standalone Automatic ZFS" {
    linux /bzImage ${toString config.boot.kernelParams} cerana.zfs_config=auto console=ttyS0
    initrd /initrd
