@@ -79,13 +79,14 @@ title Boot from first HDD
     system.build.ceranaGrub2Config = pkgs.writeTextDir "grub.cfg"
 ''
 serial --unit=0 --speed=115200
-terminal_input serial
-terminal_output serial
+terminal_input serial console
+terminal_output serial console
 
-set default 0
-set timeout 10
 set color_normal=white/black
 set color_highlight=black/white
+
+set default=0
+set timeout=10
 
 menuentry "CeranaOS Standalone Automatic ZFS" {
    linux /bzImage ${toString config.boot.kernelParams} cerana.zfs_config=auto console=ttyS0
