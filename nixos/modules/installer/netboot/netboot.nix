@@ -76,6 +76,47 @@ title Boot from first HDD
    chainloader +1
 '';
 
+    system.build.ceranaGrub2Config = pkgs.writeTextDir "grub.cfg"
+''
+serial --unit=0 --speed=115200
+terminal_input serial
+terminal_output serial
+
+set default 0
+set timeout 10
+set color_normal=white/black
+set color_highlight=black/white
+
+menuentry "CeranaOS Standalone Automatic ZFS" {
+   linux /bzImage ${toString config.boot.kernelParams} cerana.zfs_config=auto console=ttyS0
+   initrd /initrd
+}
+
+menuentry "CeranaOS Standalone Pool Prompt" {
+   linux /bzImage ${toString config.boot.kernelParams} console=ttyS0
+   initrd /initrd
+}
+
+menuentry "CeranaOS Rescue Mode" {
+   linux /bzImage ${toString config.boot.kernelParams} cerana.rescue console=ttyS0
+   initrd /initrd
+}
+
+menuentry "CeranaOS Cluster Bootstrap (Automatic ZFS, 172.16.10.2/16)" {
+   linux /bzImage ${toString config.boot.kernelParams} cerana.cluster_bootstrap cerana.zfs_config=auto cerana.mgmt_ip=172.16.10.2/16 console=ttyS0
+   initrd /initrd
+}
+
+menuentry "CeranaOS Cluster Join (iPXE)" {
+   linux16 /ipxe.lkrn
+}
+
+menuentry "Boot from first HDD" {
+   set root=(hd0)
+   chainloader +1
+}
+'';
+
     boot.loader.timeout = 10;
 
     boot.postBootCommands =

@@ -116,6 +116,7 @@ in rec {
       build.kernel
       build.netbootIpxeScript
       build.ceranaGrubConfig
+      build.ceranaGrub2Config
     ];};
 
   netboot-docker = let build = (import lib/eval-config.nix {
