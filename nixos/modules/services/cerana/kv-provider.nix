@@ -27,6 +27,7 @@ in
         ExecStart = "${daemon} -c ${cfgdir}${cfgfile}";
       };
       preStart = ''
+        find ${socketdir} -iname \*${name}.sock -delete
         if [ ! -f ${cfgdir}${cfgfile} ]; then
                 echo "{" > ${cfgdir}${cfgfile}
                 echo '  "service_name": "${name}",' >> ${cfgdir}${cfgfile}

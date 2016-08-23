@@ -20,6 +20,7 @@ in
       after = [ "ceranapool.service" ];
       serviceConfig = {
         Type = "oneshot";
+        RemainAfterExit = true;
         ExecStart = "${pkgs.systemd}/bin/systemctl restart systemd-journald.service";
       };
       preStart = ''
