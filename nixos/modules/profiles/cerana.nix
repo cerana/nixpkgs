@@ -13,8 +13,10 @@
   security.apparmor.enable = false;
 
   services.ceranaBootserver.enable = true;
+  services.ceranaBundleHeartbeat.enable = true;
   services.ceranaClusterConfProvider.enable = true;
   services.ceranaConsul.enable = true;
+  services.ceranaDatasetHeartbeat.enable = true;
   services.ceranaDataTradeProvider.enable = true;
   services.ceranaDhcpProvider.enable = true;
   services.ceranaHealthProvider.enable = true;
@@ -24,11 +26,11 @@
   services.ceranaNamespaceProvider.enable = true;
   services.cerananet.enable = true;
   services.ceranaNodeCoordinator.enable = true;
+  services.ceranaNodeHeartbeat.enable = true;
   services.ceranaPlatformImport.enable = true;
   services.ceranapool.enable = true;
   services.ceranaMoveLogs.enable = true;
   services.ceranaServiceProvider.enable = true;
-  services.ceranaStatsPusher.enable = true;
   services.ceranaSystemdProvider.enable = true;
   services.ceranaZfsProvider.enable = true;
   targets.cerana.enable = true;

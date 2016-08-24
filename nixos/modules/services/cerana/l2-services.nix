@@ -12,7 +12,9 @@ in
     systemd.targets.ceranaLayer2 = {
       description = "Cerana Layer 2";
       requires = [ "ceranaL2Coordinator.service"
-                   "ceranaStatsPusher.service"
+                   "ceranaBundleHeartbeat.service"
+                   "ceranaDatasetHeartbeat.service"
+                   "ceranaNodeHeartbeat.service"
                    "ceranaClusterConfProvider.service"
                    "ceranaConsul.service"
                    "ceranaKvProvider.service"
