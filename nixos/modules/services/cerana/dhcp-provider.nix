@@ -10,9 +10,6 @@ let
   socketdir = "/task-socket/l2-coordinator/";
   socket = "coordinator/l2-coord.sock";
   daemon = "${pkgs.cerana.bin}/bin/dhcp-provider";
-  net = "172.16.0.0/16";
-  gw = "172.16.255.255";
-  dns = "172.16.255.255";
 in
 {
   options.services.ceranaDhcpProvider.enable = mkEnableOption "ceranaDhcpProvider";
@@ -21,6 +18,7 @@ in
     systemd.services.ceranaDhcpProvider = {
       description = "Cerana DHCP Provider";
       wantedBy = [ "ceranaLayer2.target" ];
+      requires = [ "ceranaL2Coordinator.service" "ceranaKvProvider.service" ];
       after = [ "ceranaL2Coordinator.service" "ceranaKvProvider.service" ];
       serviceConfig = {
         Type = "simple";
@@ -36,9 +34,6 @@ in
                 echo "{" > ${cfgdir}${cfgfile}
                 echo '  "service_name": "${name}",' >> ${cfgdir}${cfgfile}
                 echo '  "socket_dir": "${socketdir}",' >> ${cfgdir}${cfgfile}
-                echo '  "network": "${net}",' >> ${cfgdir}${cfgfile}
-                echo '  "dns-servers": "${dns}",' >> ${cfgdir}${cfgfile}
-                echo '  "gateway": "${gw}",' >> ${cfgdir}${cfgfile}
                 echo '  "coordinator_url": "unix://${socketdir}${socket}"' >> ${cfgdir}${cfgfile}
                 echo "}" >> ${cfgdir}${cfgfile}
         fi

@@ -123,6 +123,7 @@
   ./services/backup/tarsnap.nix
   ./services/backup/znapzend.nix
   ./services/cerana/bootserver.nix
+  ./services/cerana/bootstrap.nix
   ./services/cerana/bundle-heartbeat.nix
   ./services/cerana/cerana-target.nix
   ./services/cerana/clusterconf-provider.nix

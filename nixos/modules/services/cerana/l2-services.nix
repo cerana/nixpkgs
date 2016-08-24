@@ -20,6 +20,7 @@ in
                    "ceranaKvProvider.service"
                    "ceranaDhcpProvider.service"
                    "ceranaBootserver.service"
+                   "ceranaBootstrap.service"
                    "ceranaDataTradeProvider.service"
                    ];
     };

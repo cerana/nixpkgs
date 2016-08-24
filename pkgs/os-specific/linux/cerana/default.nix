@@ -5,7 +5,7 @@ buildGoPackage rec {
      version = "2016-08-24";
      owner = "cerana";
      repo = "cerana";
-     rev = "ae6df0abc53cc4b7011a43bf1ed29bf9c7f36b9e";
+     rev = "b5856c841f3fa05c9cf64ff1d4137a07d2324548";
 
   goPackagePath = "github.com/cerana/cerana";
 
@@ -13,7 +13,7 @@ buildGoPackage rec {
     owner = "cerana";
     repo = "cerana";
     inherit rev;
-    sha256 = "0vzfq9651y98kcqabavhl1mhyvdxja42xx7sdl041d0b8y0mjc9m";
+    sha256 = "1nzz6hgvrk3dli1fllpnp7aqzqi1y0q55vk0jmi8cmlyqyblimfx";
   };
 
   preConfigure = ''
